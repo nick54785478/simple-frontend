@@ -1,0 +1,51 @@
+[
+  {
+    "label": "首頁",
+    "icon": "",
+    "url":"/home",
+    "routerLink": "/home",
+    "visible": true
+  },
+  {
+    "label": "範例",
+    "icon": "",
+    "url": "/example",
+    "routerLink": "/example",
+    "visible": true
+  },
+  {
+    "label": "簡單表單範例",
+    "icon": "",
+    "url": "/simple-form-table",
+    "routerLink": "/simple-form-table",
+    "visible": true
+  },
+  {
+    "label": "簡單上傳範例",
+    "icon": "",
+    "url": "/simple-upload",
+    "routerLink": "/simple-upload",
+    "visible": true
+  },
+  {
+    "label": "簡單 PickList 範例",
+    "icon": "",
+    "url": "/simple-picklist",
+    "routerLink": "/simple-picklist",
+    "visible": true
+  },
+  {
+    "label": "簡單 Inline Edit 範例",
+    "icon": "",
+    "url": "/simple-inline-edit",
+    "routerLink": "/simple-inline-edit",
+    "visible": true
+  },
+  {
+    "label": "關於",
+    "icon": "",
+    "url": "/about",
+    "routerLink": "/about",
+    "visible": true
+  }
+]

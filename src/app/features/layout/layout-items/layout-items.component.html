@@ -1,0 +1,23 @@
+<div>
+  <!-- 手機模式顯示 -->
+  <div *ngIf="isMobile">
+    <p-tabMenu [model]="items" scrollable="true"></p-tabMenu>
+  </div>
+
+  <!-- 桌機模式顯示 -->
+  <div class="win-mode" *ngIf="!isMobile">
+    <p-menu
+      [model]="items"
+      *ngIf="!isMobile"
+      scrollable="true"
+      pAutoFocus
+      focused="true"
+      [style]="{
+        'font-weight': '600',
+        color: '#6c757d',
+        'white-space': 'nowrap'
+      }"
+    >
+    </p-menu>
+  </div>
+</div>

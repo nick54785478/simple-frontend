@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+// 必填
+.required {
+    &::after {
+        content: " * ";
+        color: red;
+        font-size: 1.2rem;
+        line-height: 1rem;
+    }
+}

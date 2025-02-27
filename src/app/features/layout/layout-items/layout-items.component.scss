@@ -1,0 +1,27 @@
+:host ::ng-deep .p-menubar {
+    background-color: white !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+
+:host ::ng-deep .p-tabmenu-nav-prev,
+:host ::ng-deep .p-tabmenu-nav-next {
+    background-color: white !important;
+    /* 改變背景色 */
+    border: none !important;
+    /* 移除邊框 */
+    width: 30px !important;
+    /* 按鈕大小 */
+    height: 30px !important;
+    border-radius: 50%;
+    /* 讓按鈕變成圓形 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// .win-mode .p-menu .p-menuitem-link {
+//     font-weight: bold;
+// }
+

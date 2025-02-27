@@ -1,0 +1,44 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  .topbar {
+    height: 60px;
+    background-color: #007bff;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+  }
+
+  
+
+}
+
+    /* 使用 Grid 排版 */
+    .content {
+      display: grid;
+      grid-template-columns: 250px 1fr; // 桌機模式 Sidebar + Main
+      grid-template-rows: auto; // 預設行
+      flex-grow: 1;
+    }
+
+/* 手機模式 */
+@media (max-width: 768px) {
+  .content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar {
+    order: 1; // 讓 sidebar 在上方
+    width: 100%;
+  }
+
+  .main-content {
+    order: 2; // 讓 main 在下方
+  }
+}
+

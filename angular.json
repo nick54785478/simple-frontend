@@ -31,8 +31,13 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
+             "styles": [
+              "src/styles.scss",
+              "node_modules/primeicons/primeicons.css",
+              "./node_modules/jspreadsheet-ce/dist/jspreadsheet.css",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
@@ -95,13 +100,21 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
+             "styles": [
+              "src/styles.scss",
+              "node_modules/primeicons/primeicons.css",
+              "./node_modules/jspreadsheet-ce/dist/jspreadsheet.css",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css"
             ],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "005ee213-d6f1-45ca-9bd4-6b2d64c42263"
   }
 }

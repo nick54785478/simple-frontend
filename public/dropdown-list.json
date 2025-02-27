@@ -1,0 +1,41 @@
+[
+  {
+    "id":"",
+    "label": "dropdown1",
+    "value": "dropdown1",
+    "labelTw":"dropdown1",
+    "labelUs": "dropdown1",
+    "labelCn": "dropdown1"
+  },
+  {
+    "id":"",
+    "label": "dropdown2",
+    "value": "dropdown2",
+    "labelTw":"dropdown2",
+    "labelUs": "dropdown2",
+    "labelCn": "dropdown2"
+  },
+  {
+    "id":"",
+    "label": "dropdown3",
+    "value": "dropdown3",
+    "labelTw":"dropdown3",
+    "labelUs": "dropdown3",
+    "labelCn": "dropdown3"
+  },
+  {
+    "id":"",
+    "label": "dropdown4",
+    "value": "dropdown4",
+    "labelTw":"dropdown4",
+    "labelUs": "dropdown4",
+    "labelCn": "dropdown4"
+  },{
+    "id":"",
+    "label": "dropdown5",
+    "value": "dropdown5",
+    "labelTw":"dropdown5",
+    "labelUs": "dropdown5",
+    "labelCn": "dropdown5"
+  }
+]

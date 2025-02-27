@@ -1,0 +1,221 @@
+<form [formGroup]="formGroup">
+  <p-panel header="簡單表單表格範例">
+    <div class="card" #contentElement>
+      <div class="grid p-fluid">
+        <div class="col-12 md:col-3 lg:col-3">
+          <label class="required">InputText</label>
+          <input type="text" pInputText formControlName="inputTextData" />
+          <div *ngIf="formControlInvalid('inputTextData')">
+            <small
+              class="p-error"
+              *ngIf="formControl('inputTextData').errors?.['required']"
+            >
+              資料不能為空
+            </small>
+          </div>
+        </div>
+        <div class="col-12 md:col-3 lg:col-3">
+          <label class="required">InputNumber (這裡限制 0~100)</label>
+          <p-inputNumber
+            formControlName="inputNumberData"
+            [min]="0"
+            [max]="100"
+          />
+          <div *ngIf="formControlInvalid('inputNumberData')">
+            <small
+              class="p-error"
+              *ngIf="formControl('inputNumberData').errors?.['required']"
+            >
+              資料不能為空
+            </small>
+          </div>
+        </div>
+        <div class="col-12 md:col-3 lg:col-3">
+          <label class="required">下拉式選單</label>
+          <p-dropdown
+            [options]="dropdownDataList"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="請選擇"
+            [filter]="true"
+            filterBy="value"
+            [showClear]="true"
+            appendTo="body"
+            formControlName="dropdownData"
+          >
+          </p-dropdown>
+          <div *ngIf="formControlInvalid('dropdownData')">
+            <small
+              class="p-error"
+              *ngIf="formControl('dropdownData').errors?.['required']"
+            >
+              資料不能為空
+            </small>
+          </div>
+        </div>
+        <div class="col-12 md:col-3 lg:col-3">
+          <label class="required">AutoComplete</label>
+          <p-autoComplete
+            formControlName="autoCompleteData"
+            [suggestions]="autoCompleteList"
+            [forceSelection]="true"
+            [dropdown]="true"
+            [completeOnFocus]="true"
+            appendTo="body"
+            showClear="true"
+            (onClear)="clear()"
+            styleClass="w-full"
+            inputStyleClass="w-full"
+            [showEmptyMessage]="true"
+            (completeMethod)="completeMethod($event)"
+            emptyMessage="查無資料"
+          >
+            <ng-template let-data pTemplate="item">
+              <span style="font-size: 18px"
+                >{{ data.label }} ({{ data.value }})
+              </span>
+            </ng-template>
+          </p-autoComplete>
+          <!-- 點擊按鈕時，要顯示
+           * 值為空但要開啟Dialog 時顯示
+           * 點擊查詢但值為空
+            -->
+          <div
+            *ngIf="
+              formControlInvalid('autoCompleteData') ||
+              (dialogOpened && !formControlInvalid('autoCompleteData'))
+            "
+          >
+            <small class="p-error"> 資料不能為空 </small>
+          </div>
+        </div>
+      </div>
+      <div class="grid p-fluid">
+        <div class="col-12 md:col-3 lg:col-3">
+          <label class="required">日期</label>
+          <p-calendar
+            [showIcon]="true"
+            appendTo="body"
+            formControlName="calendarData"
+            dateFormat="yy-mm-dd"
+            dataType="string"
+            placeholder="yyyy-MM-dd"
+          >
+          </p-calendar>
+          <div *ngIf="formControlInvalid('calendarData')">
+            <small class="p-error"> 資料不能為空 </small>
+          </div>
+        </div>
+        <div class="col-12 md:col-3 lg:col-3">
+          <label class="required">時間</label>
+          <input type="time" pInputText formControlName="inputTime" />
+          <div *ngIf="formControlInvalid('inputTime')">
+            <small class="p-error"> 資料不能為空 </small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid p-fluid justify-content-end">
+      <div class="col-12 md:col-3 lg:col-2">
+        <button type="button" pButton label="新增" (click)="onAdd()"></button>
+      </div>
+      <div class="col-12 md:col-3 lg:col-2">
+        <button type="button" pButton label="查詢" (click)="query()"></button>
+      </div>
+      <div class="col-12 md:col-3 lg:col-2">
+        <button
+          type="button"
+          class="p-button-secondary p-button-outlined"
+          pButton
+          label="清除"
+          (click)="clear()"
+        ></button>
+      </div>
+    </div>
+  </p-panel>
+</form>
+
+<div class="card">
+  <p-table
+    #dt
+    responsiveLayout="stack"
+    [rowsPerPageOptions]="[2, 5, 10]"
+    styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped"
+    selectionMode="multiple"
+    [resizableColumns]="true"
+    [value]="tableData"
+    [columns]="cols"
+    [(selection)]="selectedData"
+    [scrollable]="true"
+    scrollDirection="both"
+    scrollHeight="300px"
+    [paginator]="true"
+    [rows]="10"
+  >
+    <!-- 標題 -->
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+          {{ col.header }} <p-sortIcon [field]="col.field" />
+        </th>
+        <th
+          alignFrozen="right"
+          pFrozenColumn
+          style="
+            min-width: 70px !important;
+            max-width: 70px !important;
+            width: 70px !important;
+          "
+        >
+          Actions
+        </th>
+      </tr>
+    </ng-template>
+    <!-- 內容 -->
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+        <td
+          *ngFor="let col of columns"
+          style="
+            white-space: pre-wrap;
+            word-break: break-all;
+            word-wrap: break-word;
+            max-width: 100% !important;
+            min-width: 4rem !important;
+          "
+        >
+          <ng-container>
+            {{ rowData[col.field] }}
+          </ng-container>
+        </td>
+        <td alignFrozen="right" pFrozenColumn style="text-align: center">
+          <div>
+            <p-menu
+              #menu
+              [popup]="true"
+              [model]="rowActionMenu"
+              appendTo="body"
+            ></p-menu>
+            <button
+              pButton
+              type="button"
+              class="p-button-outlined p-button-secondary"
+              style="color: rgb(1, 155, 70)"
+              icon="pi pi-pencil"
+              (click)="clickRowActionMenu(rowData); menu.toggle($event)"
+            ></button>
+            <button
+              pButton
+              type="button"
+              class="p-button-outlined p-button-secondary"
+              icon="pi pi-trash"
+              style="color: red"
+              (click)="delete(rowData.id); menu.toggle($event)"
+            ></button>
+          </div>
+        </td>
+      </tr>
+      <!-- <button type="button" (click)="show('test')" pButton icon="pi pi-info-circle" label="Show"></button> -->
+    </ng-template>
+  </p-table>
+</div>

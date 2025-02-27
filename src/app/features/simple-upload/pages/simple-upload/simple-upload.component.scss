@@ -1,0 +1,8 @@
+.preview-content {
+    max-height: 300px;
+    /* 設定最大高度 */
+    overflow-y: auto;
+    /* 垂直滾動 */
+    padding-right: 10px;
+    /* 讓滾動條不會壓住內容 */
+}
