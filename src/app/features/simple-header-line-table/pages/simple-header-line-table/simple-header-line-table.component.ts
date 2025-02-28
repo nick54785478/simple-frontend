@@ -20,12 +20,13 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CoreModule } from '../../../../core/core.module';
 import { SimpleHeaderTableComponent } from './simple-header-table/simple-header-table.component';
 import { DialogConfig } from '../../../../shared/models/dialog-config.model';
+import { SystemMessageService } from '../../../../core/services/system-message.service';
 
 @Component({
   selector: 'app-simple-header-line-table',
   standalone: true,
   imports: [CommonModule, SharedModule, CoreModule],
-  providers: [DialogService],
+  providers: [DialogService, SystemMessageService],
   templateUrl: './simple-header-line-table.component.html',
   styleUrl: './simple-header-line-table.component.scss',
 })
@@ -144,6 +145,7 @@ export class SimpleHeaderLineTableComponent
         finalize(() => {
           // 關閉轉圈圈
           this.loadingMaskService.hide();
+          this.submitted = false;
         })
       )
       .subscribe({
