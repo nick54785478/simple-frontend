@@ -7,6 +7,7 @@ import { SimpleUploadComponent } from './simple-upload/pages/simple-upload/simpl
 import { SimpleFormTableComponent } from './simple-form-table/pages/simple-form-table/simple-form-table.component';
 import { SimplePicklistComponent } from './simple-picklist/pages/simple-picklist/simple-picklist.component';
 import { SimpleInlineEditComponent } from './simple-inline-edit/pages/simple-inline-edit/simple-inline-edit.component';
+import { SimpleHeaderLineTableComponent } from './simple-header-line-table/pages/simple-header-line-table/simple-header-line-table.component';
 
 /**
  * 定義 Features 子路由配置的檔案
@@ -34,6 +35,10 @@ export const routes: Routes = [
   {
     path: 'simple-inline-edit',
     component: SimpleInlineEditComponent,
+  },
+  {
+    path: 'simple-header-line-table',
+    component: SimpleHeaderLineTableComponent,
   },
   {
     path: 'about',

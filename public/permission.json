@@ -42,6 +42,13 @@
     "visible": true
   },
   {
+    "label": "簡單雙表範例",
+    "icon": "",
+    "url": "/simple-header-line-table",
+    "routerLink": "/simple-header-line-table",
+    "visible": true
+  },
+  {
     "label": "關於",
     "icon": "",
     "url": "/about",
