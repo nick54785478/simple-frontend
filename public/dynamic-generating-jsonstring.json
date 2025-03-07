@@ -1,0 +1,67 @@
+[
+  {
+    "name": "textControl",
+    "type": "text",
+    "label": "Text",
+    "validators": ["required"]
+  },
+  {
+    "name": "numberControl",
+    "type": "number",
+    "label": "Number",
+    "validators": ["required"]
+  },
+  {
+    "name": "emailControl",
+    "type": "email",
+    "label": "Email",
+    "validators": ["required", "email"]
+  },
+  {
+    "name": "timeControl",
+    "type": "time",
+    "label": "Time",
+    "validators": ["required"]
+  },
+  {
+    "name": "dropdownControl",
+    "type": "dropdown",
+    "label": "Dropdown",
+    "options": [
+      {
+        "id":"",
+        "label": "Dropdown1",
+        "value": "Dropdown1"
+      },
+      {
+        "id":"",
+        "label": "Dropdown2",
+        "value": "Dropdown2"
+      }
+    ],
+    "validators": ["required"]
+  },
+  {
+    "name": "calendarControl",
+    "label": "Calendar",
+    "type": "calendar",
+    "pattern": "yy-mm-dd",
+    "validators": ["required"]
+  },
+  {
+    "name": "autoCompleteControl",
+    "label": "AutoComplete",
+    "type": "autocomplete",
+    "placeholder":"請選擇",
+    "validators": []
+  },
+  {
+    "name": "textareaControl",
+    "label": "Textarea",
+    "type": "textarea",
+    "validators": [],
+    "cols":10,
+    "rows":90
+  }
+]
+

@@ -49,6 +49,13 @@
     "visible": true
   },
   {
+    "label": "動態生成範例",
+    "icon": "",
+    "url": "/dynamic-generating",
+    "routerLink": "/dynamic-generating",
+    "visible": true
+  },
+  {
     "label": "關於",
     "icon": "",
     "url": "/about",

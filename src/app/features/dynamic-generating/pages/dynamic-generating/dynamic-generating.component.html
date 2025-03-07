@@ -1,0 +1,178 @@
+<form [formGroup]="formGroup">
+  <p-panel header="簡單動態生成表單範例">
+    <div class="card" #contentElement>
+      <div class="grid p-fluid">
+        <ng-container *ngFor="let field of formFields">
+          <div class="col-12 md:col-3 lg:col-3">
+            <ng-container [ngSwitch]="field.type">
+              <label
+                [ngClass]="{
+                  required: field.validators.includes('required')
+                }"
+                >{{ field.label }}</label
+              >
+              <ng-container *ngSwitchCase="'text'">
+                <input
+                  [type]="field.type"
+                  pInputText
+                  formControlName="{{ field.name }}"
+                />
+              </ng-container>
+              <ng-container *ngSwitchCase="'number'">
+                <p-inputNumber formControlName="{{ field.name }}" />
+              </ng-container>
+              <ng-container *ngSwitchCase="'email'">
+                <input
+                  [type]="field.type"
+                  pInputText
+                  formControlName="{{ field.name }}"
+                />
+              </ng-container>
+              <ng-container *ngSwitchCase="'time'">
+                <input
+                  [type]="field.type"
+                  pInputText
+                  formControlName="{{ field.name }}"
+                />
+              </ng-container>
+              <ng-container *ngSwitchCase="'dropdown'">
+                <p-dropdown
+                  [options]="field.options"
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="請選擇"
+                  [filter]="true"
+                  filterBy="value"
+                  [showClear]="true"
+                  appendTo="body"
+                  formControlName="{{ field.name }}"
+                >
+                </p-dropdown>
+              </ng-container>
+              <ng-container *ngSwitchCase="'calendar'">
+                <p-calendar
+                  [showIcon]="true"
+                  appendTo="body"
+                  formControlName="{{ field.name }}"
+                  dateFormat="{{ field.pattern }}"
+                  dataType="string"
+                  placeholder="{{ field.pattern }}"
+                />
+              </ng-container>
+              <ng-container *ngSwitchCase="'autocomplete'">
+                <p-autoComplete
+                  [suggestions]="allSuggestions"
+                  (completeMethod)="search($event)"
+                  [forceSelection]="true"
+                  appendTo="body"
+                  [dropdown]="true"
+                  [completeOnFocus]="true"
+                  [placeholder]="field.placeholder"
+                  emptyMessage="查無資料"
+                  formControlName="{{ field.name }}"
+                >
+                  <ng-template let-data pTemplate="item">
+                    <span style="font-size: 18px"
+                      >{{ data.label }} ({{ data.value }})
+                    </span>
+                  </ng-template>
+                </p-autoComplete>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'textarea'">
+                <textarea
+                  formControlName="{{ field.name }}"
+                  appAutofocus
+                  rows="field.rows"
+                  cols="field.cols"
+                  pInputTextarea
+                  [autoResize]="true"
+                >
+                </textarea>
+              </ng-container>
+              <div
+                *ngIf="
+                  field.validators.includes('required') &&
+                  formControlInvalid(field.name)
+                "
+              >
+                <small
+                  class="p-error"
+                  *ngIf="formControl(field.name).errors?.['required']"
+                >
+                  資料不能為空
+                </small>
+                <small
+                  class="p-error"
+                  *ngIf="formControl(field.name).errors?.['email']"
+                >
+                  Email 格式有誤
+                </small>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="grid p-fluid justify-content-end">
+      <div class="col-12 md:col-3 lg:col-2">
+        <button
+          type="button"
+          pButton
+          label="提交"
+          (click)="onSubmit()"
+        ></button>
+      </div>
+      <div class="col-12 md:col-3 lg:col-2">
+        <button
+          type="button"
+          class="p-button-secondary p-button-outlined"
+          pButton
+          label="清除"
+          (click)="clear()"
+        ></button>
+      </div>
+    </div>
+  </p-panel>
+</form>
+
+<!-- <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div *ngFor="let field of formFields" class="p-field">
+    <label>{{ field.label }}</label>
+
+    <input
+      *ngIf="field.type === 'text' || field.type === 'email'"
+      [type]="field.type"
+      pInputText
+      formControlName="{{ field.name }}"
+    />
+
+    <p-dropdown
+      *ngIf="field.type === 'dropdown'"
+      [options]="field.options"
+      formControlName="{{ field.name }}"
+    ></p-dropdown>
+
+    <p-checkbox
+      *ngIf="field.type === 'checkbox'"
+      [binary]="true"
+      formControlName="{{ field.name }}"
+    ></p-checkbox>
+
+    <small
+      class="p-error"
+      *ngIf="
+        formGroup.get(field.name)?.invalid && formGroup.get(field.name)?.touched
+      "
+    >
+      {{ field.label }} 為必填
+    </small>
+  </div>
+
+  <button
+    pButton
+    type="submit"
+    label="提交"
+    [disabled]="formGroup.invalid"
+  ></button>
+</form> -->
