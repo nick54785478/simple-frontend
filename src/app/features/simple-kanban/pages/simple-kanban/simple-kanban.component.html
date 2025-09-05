@@ -1,0 +1,67 @@
+<div class="card flex gap-3">
+  <!-- Planned -->
+  <div class="flex-1">
+    <h3 class="text-center">TODO ({{ todo.length }})</h3>
+    <div
+      class="p-2 drop-column"
+      pDroppable
+      (onDrop)="drop(todo, 'TODO', 'todo')"
+    >
+      <div
+        *ngFor="let task of todo"
+        class="task-card"
+        pDraggable
+        (onDragStart)="dragStart(task)"
+        (onDragEnd)="dragEnd()"
+      >
+        <h4>{{ task.title }}</h4>
+        <p><i class="pi pi-user mr-2"></i>{{ task.responsiblePerson }}</p>
+        <small>{{ task.remark }}</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- In Progress -->
+  <div class="flex-1">
+    <h3 class="text-center">In Progress ({{ inProgress.length }})</h3>
+    <div
+      class="p-2 drop-column"
+      pDroppable
+      (onDrop)="drop(inProgress, 'IN_PROGRESS', 'inProgress')"
+    >
+      <div
+        *ngFor="let task of inProgress"
+        class="task-card"
+        pDraggable
+        (onDragStart)="dragStart(task)"
+        (onDragEnd)="dragEnd()"
+      >
+        <h4>{{ task.title }}</h4>
+        <p><i class="pi pi-user mr-2"></i>{{ task.responsiblePerson }}</p>
+        <small>{{ task.remark }}</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Done -->
+  <div class="flex-1">
+    <h3 class="text-center">Done ({{ done.length }})</h3>
+    <div
+      class="p-2 drop-column"
+      pDroppable
+      (onDrop)="drop(done, 'DONE', 'done')"
+    >
+      <div
+        *ngFor="let task of done"
+        class="task-card"
+        pDraggable
+        (onDragStart)="dragStart(task)"
+        (onDragEnd)="dragEnd()"
+      >
+        <h4>{{ task.title }}</h4>
+        <p><i class="pi pi-user mr-2"></i>{{ task.responsiblePerson }}</p>
+        <small>{{ task.remark }}</small>
+      </div>
+    </div>
+  </div>
+</div>

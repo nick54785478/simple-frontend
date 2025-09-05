@@ -56,6 +56,13 @@
     "visible": true
   },
   {
+    "label": "看板範例",
+    "icon": "",
+    "url": "/simple-kanban",
+    "routerLink": "/simple-kanban",
+    "visible": true
+  },
+  {
     "label": "關於",
     "icon": "",
     "url": "/about",

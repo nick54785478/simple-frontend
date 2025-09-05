@@ -15,7 +15,7 @@
           </div>
         </div>
         <div class="col-12 md:col-3 lg:col-3">
-          <label class="required">InputNumber (這裡限制 0~100)</label>
+          <label class="required">InputNumber (0~100)</label>
           <p-inputNumber
             formControlName="inputNumberData"
             [min]="0"
@@ -31,12 +31,12 @@
           </div>
         </div>
         <div class="col-12 md:col-3 lg:col-3">
-          <label class="required">下拉式選單</label>
+          <label class="required">Dropdown</label>
           <p-dropdown
             [options]="dropdownDataList"
             optionLabel="label"
             optionValue="value"
-            placeholder="請選擇"
+            placeholder="Please select"
             [filter]="true"
             filterBy="value"
             [showClear]="true"

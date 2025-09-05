@@ -52,8 +52,9 @@
     "name": "autoCompleteControl",
     "label": "AutoComplete",
     "type": "autocomplete",
-    "placeholder":"請選擇",
-    "validators": []
+    "placeholder":"Please select",
+    "validators": [],
+    "uri":"/autocomplete-list.json"
   },
   {
     "name": "textareaControl",

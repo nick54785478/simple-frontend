@@ -16,7 +16,7 @@ import { SimpleInlineEditService } from '../../services/simple-inline-edit.servi
 import { LoadingMaskService } from '../../../../core/services/loading-mask.service';
 import { finalize } from 'rxjs/internal/operators/finalize';
 import { DialogConfirmService } from '../../../../core/services/dialog-confirm.service';
-import { SimpleInlineEditRequestData } from '../models/simple-inline-edit-request-data.model';
+import { SimpleInlineEditRequestData } from '../../models/simple-inline-edit-request-data.model';
 
 @Component({
   selector: 'app-simple-inline-edit',
@@ -179,12 +179,6 @@ export class SimpleInlineEditComponent
    * 新增一筆空的 row 資料
    * */
   addNewRow(): void {
-    // 如果是編輯或刪除模式，就不新增資料
-    if (this.mode === 'edit' || this.mode === 'delete') {
-      return;
-    }
-
-    // 設定模式為 新增模式
     this.mode = 'add';
     this.newRow = {
       id: null,
@@ -194,30 +188,14 @@ export class SimpleInlineEditComponent
       field4: '',
       field5: '',
       field6: '',
-      givenIndex: 0, // 前端給予的編號資料
-      // givenIndex: this.tableData.length, // 前端給予的編號資料
+      givenIndex: this.minGivenIndex--, // 前端給予的編號資料
     };
-
-    // 所有編號往後推一號
-    this.tableData.forEach((e) => {
-      e.givenIndex += 1;
+    this.tableData.unshift(this.newRow);
+    // this.onEdit(this.newRow);
+    // 觸發該 row 的編輯模式
+    setTimeout(() => {
+      this.dataTable.initRowEdit(this.newRow);
     });
-
-    // 將 index 加入 newRowIndexes，用以紀錄更新資料的 index
-    this.newRowIndexes.push(this.newRow.givenIndex);
-    // 將此資料推入 tableData
-    this.tableData.push(this.newRow);
-    // 根據 givenIndex 重排序
-    this.tableData.sort((a, b) => {
-      if (a.givenIndex < b.givenIndex) {
-        return -1; // a 排在 b 前
-      } else if (a.givenIndex > b.givenIndex) {
-        return 1; // b 排在 a 前
-      } else {
-        return 0; // 保持順序
-      }
-    });
-    console.log(this.tableData);
   }
 
   /**
@@ -307,19 +285,13 @@ export class SimpleInlineEditComponent
   /**
    * 取消編輯/新增
    * */
-  cancel(rowIndex?: number) {
-    if (this.mode === 'edit') {
-      this.cancelEdit();
-    } else if (
-      this.mode === 'add' &&
-      rowIndex !== -1 &&
-      rowIndex !== undefined
-    ) {
-      this.cancelAdd(rowIndex);
-    }
-
-    this.editingIndex = -1;
-    this.editingRow = null;
+  /**
+   * 取消編輯/新增
+   * */
+  cancel(rowData: any, rowIndex: number) {
+    console.log(rowIndex);
+    this.tableData[rowIndex] = this.clonedData[rowData.givenIndex];
+    delete this.clonedData[rowData.givenIndex];
   }
 
   /**
@@ -351,115 +323,34 @@ export class SimpleInlineEditComponent
   }
 
   /**
-   * 移除 id = null 的值
-   * 用於移除新列 (row)
-   *
-   * @param rowIndex 當前 row 資料的 index
-   */
-  cancelAdd(rowIndex: number) {
-    if (this.mode === 'add') {
-      // 過濾出 id != null 者 (現有資料) 及 沒被選上的資料
-      this.tableData = this.tableData.filter(
-        (data) => data.id !== null || data?.givenIndex !== rowIndex
-      );
-      // 過濾掉該 rowIndex
-      this.newRowIndexes = this.newRowIndexes.filter(
-        (index) => index !== rowIndex
-      );
-    }
-    // reset 新增資料
-    this.newRow = null;
-
-    // newRowIndexes 裡面還有資料，代表不能解除新增模式
-    if (this.newRowIndexes.length > 0) {
-      return;
-    }
-
-    this.mode = '';
-  }
-
-  /**
    * 確認編輯/新增
    * @param givenIndex 當前 row 的 givenIndex
    * */
-  confirm(givenIndex: number) {
-    // 當新增模式會將資料更新為最新的空資料，因為前面進新增模式時未 select
-    if (this.mode === 'add') {
-      // 更新為該筆資料
-      this.newRow = this.tableData.find(
-        (data) => data.givenIndex === givenIndex
-      );
-
-      // 新增模式下有欄位為空值，不予以 Confirm
-      if (!this.checkRowData(this.newRow)) {
-        return;
-      }
-
-      // 過濾掉該 rowIndex
-      this.newRowIndexes = this.newRowIndexes.filter(
-        (index) => index !== givenIndex
-      );
+  confirm(rowData: any) {
+    if (!this.checkRequired(rowData)) {
+      // 觸發該 row 的編輯模式
+      setTimeout(() => {
+        this.dataTable.initRowEdit(rowData);
+      });
+    } else {
+      this.mode = '';
     }
-
-    // 編輯模式，檢查資料
-    if (this.mode === 'edit' && !this.checkRowData(this.selectedData)) {
-      return;
-    }
-    this.newRow = null;
-    this.editingIndex = -1;
-    this.editingRow = null;
-
-    // newRowIndexes 裡面還有資料，代表不能解除更新資料
-    if (this.newRowIndexes.length > 0) {
-      return;
-    }
-
-    // 解除特定模式
-    this.mode = '';
   }
 
   /**
-   * 判斷是否為新增模式
-   * @param rowData 當前的 row 資料
-   * */
-  isAdding(rowData: any) {
-    // 這裡要使用 givenIndex ，因 Table 的 index 會隨資料數量改變
-    return !rowData.id && this.newRowIndexes.includes(rowData.givenIndex);
-    // rowIndex !== rowData.givenIndex;
-  }
-
-  /**
-   * 判斷是否為編輯模式
-   * */
-  isEditing(givenIndex: any): boolean {
-    return this.editingIndex === givenIndex;
-  }
-
-  /**
-   * 進行刪除動作
-   * @param givenIndex
+   * 刪除 Table 資料
+   * @param rowData
    */
-  onDelete(givenIndex: number) {
-    // 若目前為 新增模式或編輯模式 pass
-    if (this.mode === 'add' || this.mode === 'edit') {
-      return;
-    }
-    // 進入編輯模式
-    this.mode = 'delete';
+  protected override remove(rowData: any): void {
     this.dialogConfirmService.confirmDelete(
       () => {
         // 確認後的動作 => 過濾該 givenIndex 的資料
         this.tableData = this.tableData.filter(
-          (data) => data.givenIndex !== givenIndex
+          (item) => item.givenIndex !== rowData.givenIndex
         );
-        this.mode = '';
-        this.messageService.success('成功刪除該筆資料');
       },
       '',
-      () => {
-        // 取消 delete 模式
-        this.mode = '';
-      }
+      () => {}
     );
   }
 
@@ -468,34 +359,10 @@ export class SimpleInlineEditComponent
    * @param givenIndex
    * @returns
    */
-  onEdit(givenIndex: number) {
-    console.log(this.mode);
-    // 若目前為 新增模式或刪除模式 pass
-    if (this.mode === 'add' || this.mode === 'delete') {
-      return;
-    }
-
-    // 避免當我進入編輯模式後，再點擊其他列導致進入其他列的編輯模式
-    if (this.mode === 'edit' && givenIndex !== this.editingIndex) {
-      return;
-    }
-
-    // 進入編輯模式
-    this.mode = 'edit';
-
-    if (typeof givenIndex === 'number') {
-      // 選取的 rowIndex
-      this.selectedIndex = givenIndex;
-      // 被編輯的 row 資料
-      this.editingIndex = givenIndex;
-    }
-    // 根據 givenIndex 找出該筆資料
-    this.selectedData = this.tableData.find(
-      (data) => data.givenIndex === givenIndex
-    );
-    this.editingRow = { ...this.selectedData }; // 深拷貝選中的行資料，避免直接修改原始數據
+  onEdit(rowData: any) {
+    console.log(rowData);
+    this.clonedData[rowData.givenIndex] = { ...rowData };
   }
-
   /**
    * 回歸原狀，原先新增的資料全部放棄。
    */

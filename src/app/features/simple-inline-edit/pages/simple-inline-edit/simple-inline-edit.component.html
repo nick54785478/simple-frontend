@@ -15,7 +15,7 @@
           </div>
         </div>
         <div class="col-12 md:col-3 lg:col-3">
-          <label class="required">InputNumber (這裡限制 0~100)</label>
+          <label class="required">InputNumber (0~100)</label>
           <p-inputNumber
             formControlName="inputNumberData"
             [min]="0"
@@ -31,12 +31,12 @@
           </div>
         </div>
         <div class="col-12 md:col-3 lg:col-3">
-          <label class="required">下拉式選單</label>
+          <label class="required">Dropdown</label>
           <p-dropdown
             [options]="dropdownDataList"
             optionLabel="label"
             optionValue="value"
-            placeholder="請選擇"
+            placeholder="Please select"
             [filter]="true"
             filterBy="value"
             [showClear]="true"
@@ -138,27 +138,25 @@
   <div class="card">
     <p-table
       #dt
-      [rowsPerPageOptions]="[2, 5, 10]"
-      [tableStyle]="{
-        'min-width': '10rem',
-        'word-wrap': 'break-word'
-      }"
-      styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped"
-      selectionMode="single"
       [(selection)]="selectedData"
       [value]="tableData"
+      styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped"
       [columns]="cols"
-      [scrollable]="true"
-      scrollHeight="500px"
+      [rowsPerPageOptions]="[2, 5, 10]"
       [paginator]="true"
       [rows]="10"
-      scrollDirection="both"
+      [sortOrder]="-1"
+      [scrollable]="true"
+      [frozenWidth]="'1rem'"
+      dataKey="givenIndex"
+      editMode="row"
       [resizableColumns]="true"
+      [tableStyle]="{ 'min-width': '50rem' }"
     >
       <!-- scrollDirection="both"  [resizableColumns]="true"-->
 
       <!-- 標題 -->
-      <ng-template pTemplate="header" let-columns>
+      <ng-template pTemplate="header" #header let-columns>
         <tr>
           <th
             *ngFor="let col of columns"
@@ -166,174 +164,177 @@
             style="
               min-width: 100% !important;
               max-width: 100% !important;
-              width: 300px !important;
+              width: 500px !important;
             "
           >
             <ng-container
-              >{{ col.header }} <p-sortIcon [field]="col.field"
-            /></ng-container>
+              >{{ col.header }}
+              <!-- <p-sortIcon [field]="col.field"/> -->
+            </ng-container>
           </th>
           <th
             alignFrozen="right"
             pFrozenColumn
             style="
-              min-width: 100% !important;
-              max-width: 100% !important;
-              width: 300px !important;
+              min-width: 125px !important;
+              max-width: 2rem !important;
+              width: 200px !important;
             "
           >
             Actions
           </th>
         </tr>
       </ng-template>
-
       <ng-template
         pTemplate="body"
+        #body
+        let-editing="editing"
         let-rowData
         let-columns="columns"
         let-rowIndex="rowIndex"
       >
-        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+        <tr [pEditableRow]="rowData">
           <td *ngFor="let col of columns">
-            <!-- 編輯模式 -->
-            <!-- else viewMode -->
-            <ng-container
-              *ngIf="
-                isEditing(rowData.givenIndex) || isAdding(rowData);
-                else viewMode
-              "
-            >
-              <!-- 根據 type 生成 -->
-              <ng-container *ngIf="col.type === 'dropdown'">
-                <p-dropdown
-                  placeholder="請選擇"
-                  [(ngModel)]="rowData[col.field]"
-                  [filter]="true"
-                  filterBy="value"
-                  [options]="loadDropdownData(col)"
-                  [style]="{
-                    'word-wrap': 'break-word',
-                    'max-width': '2rem',
-                    'min-width': '100%'
-                  }"
-                  optionLabel="label"
-                  optionValue="value"
-                  appendTo="body"
-                ></p-dropdown>
-              </ng-container>
-              <ng-container *ngIf="col.type === 'autoComplete'">
-                <p-autoComplete
-                  [(ngModel)]="rowData[col.field]"
-                  [suggestions]="autoCompleteList"
-                  [forceSelection]="true"
-                  [dropdown]="true"
-                  [style]="{
-                    'word-wrap': 'break-word',
-                    'max-width': '2rem',
-                    'min-width': '100%'
-                  }"
-                  [completeOnFocus]="true"
-                  appendTo="body"
-                  showClear="true"
-                  (onClear)="clear()"
-                  styleClass="w-full"
-                  inputStyleClass="w-full"
-                  [showEmptyMessage]="true"
-                  (completeMethod)="completeMethod($event)"
-                  emptyMessage="查無資料"
-                >
-                  <ng-template let-data pTemplate="item">
-                    <span style="font-size: 18px"
-                      >{{ data.label }} ({{ data.value }})
-                    </span>
-                  </ng-template>
-                </p-autoComplete>
-              </ng-container>
-              <ng-container *ngIf="col.type === 'textArea'">
-                <textarea
-                  [(ngModel)]="rowData[col.field]"
-                  appAutofocus
-                  rows="5"
-                  cols="100"
-                  [style]="{
-                    'word-wrap': 'break-word',
-                    'max-width': '2rem',
-                    'min-width': '100%'
-                  }"
-                  pInputTextarea
-                  [autoResize]="true"
-                >
-                </textarea>
-              </ng-container>
-              <ng-container *ngIf="col.type === 'inputText'">
-                <input
-                  [(ngModel)]="rowData[col.field]"
-                  type="text"
-                  appAutofocus
-                  [style]="{
-                    'word-wrap': 'break-word',
-                    'max-width': '2rem',
-                    'min-width': '100%'
-                  }"
-                  class="p-inputtext"
-                  pInputText
-                />
-              </ng-container>
-              <ng-container *ngIf="col.type === 'inputNumber'">
-                <input
-                  [(ngModel)]="rowData[col.field]"
-                  type="number"
-                  appAutofocus
-                  [style]="{
-                    'word-wrap': 'break-word',
-                    'max-width': '2rem',
-                    'min-width': '100%'
-                  }"
-                  class="p-inputtext"
-                  pInputText
-                />
-              </ng-container>
-              <ng-container *ngIf="col.type === 'inputTime'">
-                <input
-                  [(ngModel)]="rowData[col.field]"
-                  type="time"
-                  appAutofocus
-                  [style]="{
-                    'word-wrap': 'break-word',
-                    'max-width': '2rem',
-                    'min-width': '100%'
-                  }"
-                  class="p-inputtext"
-                  pInputText
-                />
-              </ng-container>
-              <div *ngIf="!rowData[col.field]">
-                <small class="p-error"> 資料不能為空 </small>
-              </div>
-            </ng-container>
+            <p-cellEditor>
+              <ng-template #input pTemplate="input">
+                <ng-container [ngSwitch]="col.type">
+                  <!-- inputText -->
+                  <input
+                    name="{{ col.field }}-{{ rowIndex }}"
+                    #ctrl="ngModel"
+                    [ngClass]="{ 'ng-invalid': ctrl.invalid && ctrl.touched }"
+                    [style]="{
+                      'word-wrap': 'break-word',
+                      'max-width': '2rem',
+                      'min-width': '100%'
+                    }"
+                    *ngSwitchCase="'inputText'"
+                    pInputText
+                    type="text"
+                    [(ngModel)]="rowData[col.field]"
+                    [required]="col.required"
+                    [readonly]="col.readOnly"
+                  />
 
-            <!-- 檢視模式 -->
-            <ng-template #viewMode>
-              <div (dblclick)="onEdit(rowData.givenIndex)" class="cell-content">
+                  <!-- textArea -->
+                  <textarea
+                    name="{{ col.field }}-{{ rowIndex }}"
+                    #ctrl="ngModel"
+                    [ngClass]="{ 'ng-invalid': ctrl.invalid && ctrl.touched }"
+                    [style]="{
+                      'word-wrap': 'break-word',
+                      'max-width': '2rem',
+                      'min-width': '100%'
+                    }"
+                    *ngSwitchCase="'textArea'"
+                    pInputTextarea
+                    rows="3"
+                    [(ngModel)]="rowData[col.field]"
+                    [autoResize]="true"
+                    [required]="col.required"
+                  ></textarea>
+
+                  <!-- dropdown -->
+                  <p-dropdown
+                    name="{{ col.field }}-{{ rowIndex }}"
+                    #ctrl="ngModel"
+                    [ngClass]="{ 'ng-invalid': ctrl.invalid && ctrl.touched }"
+                    [style]="{
+                      'word-wrap': 'break-word',
+                      'max-width': '2rem',
+                      'min-width': '100%'
+                    }"
+                    required
+                    *ngSwitchCase="'dropdown'"
+                    [(ngModel)]="rowData[col.field]"
+                    [options]="loadDropdownData(col)"
+                    [filter]="true"
+                    optionLabel="label"
+                    optionValue="value"
+                    placeholder="Please select"
+                    appendTo="body"
+                    [readonly]="col.readOnly"
+                    (onChange)="onDropdownChange($event, col, rowData)"
+                    [required]="col.required"
+                  ></p-dropdown>
+
+                  <!-- autoComplete -->
+                  <p-autoComplete
+                    name="{{ col.field }}-{{ rowIndex }}"
+                    #ctrl="ngModel"
+                    [ngClass]="{ 'ng-invalid': ctrl.invalid && ctrl.touched }"
+                    [style]="{
+                      'word-wrap': 'break-word',
+                      'max-width': '2rem',
+                      'min-width': '100%'
+                    }"
+                    *ngSwitchCase="'autoComplete'"
+                    [(ngModel)]="rowData[col.field]"
+                    [suggestions]="autoCompleteList"
+                    (completeMethod)="completeMethod($event)"
+                    [dropdown]="true"
+                    [readonly]="col.readOnly"
+                    [forceSelection]="true"
+                    appendTo="body"
+                    styleClass="w-full"
+                    inputStyleClass="w-full"
+                  ></p-autoComplete>
+
+                  <!-- fallback -->
+                  <input
+                    name="{{ col.field }}-{{ rowIndex }}"
+                    #ctrl="ngModel"
+                    [ngClass]="{ 'ng-invalid': ctrl.invalid && ctrl.touched }"
+                    *ngSwitchDefault
+                    [readonly]="col.readOnly"
+                    [style]="{
+                      'word-wrap': 'break-word',
+                      'max-width': '2rem',
+                      'min-width': '100%'
+                    }"
+                    pInputText
+                    type="text"
+                    [(ngModel)]="rowData[col.field]"
+                    required
+                  />
+                </ng-container>
+                <!-- 判斷是否為 required 且 資料是否為空 -->
+                <div *ngIf="col.required && !rowData[col.field]">
+                  <small class="p-error"> 資料不能為空 </small>
+                </div>
+              </ng-template>
+
+              <!-- Output -->
+              <ng-template #output pTemplate="output">
                 {{ rowData[col.field] }}
-              </div>
-            </ng-template>
+              </ng-template>
+            </p-cellEditor>
           </td>
 
-          <td pFrozenColumn>
+          <!-- 按鈕區 -->
+          <td
+            pFrozenColumn
+            alignFrozen="right"
+            style="
+              min-width: 125px !important;
+              max-width: 2rem !important;
+              width: 200px !important;
+            "
+          >
             <button
-              *ngIf="mode === ''"
+              *ngIf="!editing"
               pButton
               [rounded]="true"
               [text]="true"
               type="button"
+              pInitEditableRow
               style="color: #2196f3"
               class="p-button-outlined p-button-secondary"
               icon="pi pi-pencil"
-              (click)="clickRowActionMenu(rowData); onEdit(rowData.givenIndex)"
+              (click)="clickRowActionMenu(rowData); onEdit(rowData)"
             ></button>
             <button
-              *ngIf="mode === ''"
+              *ngIf="!editing"
               pButton
               [rounded]="true"
               [text]="true"
@@ -341,24 +342,22 @@
               style="color: #f70202"
               class="p-button-outlined p-button-secondary"
               icon="pi pi-trash"
-              (click)="
-                clickRowActionMenu(rowData); onDelete(rowData.givenIndex)
-              "
+              (click)="remove(rowData)"
             ></button>
             <div class="flex mb-2 gap-2 justify-content-start">
-              <ng-container
-                *ngIf="isEditing(rowData.givenIndex) || isAdding(rowData)"
-              >
+              <ng-container *ngIf="editing">
                 <i
                   class="pi pi-check"
                   style="color: green"
-                  (click)="confirm(rowData.givenIndex)"
+                  pSaveEditableRow
+                  (click)="confirm(rowData)"
                 ></i>
 
                 <i
                   class="pi pi-times"
                   style="color: red"
-                  (click)="cancel(rowData.givenIndex)"
+                  pCancelEditableRow
+                  (click)="cancel(rowData, rowIndex)"
                 ></i>
               </ng-container>
             </div>

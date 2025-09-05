@@ -41,6 +41,9 @@ import { InplaceModule } from 'primeng/inplace';
 import { InputMaskModule } from 'primeng/inputmask';
 import { PickListModule } from 'primeng/picklist';
 import { StepperModule } from 'primeng/stepper';
+import { ChipModule } from 'primeng/chip';
+import { ChipsModule } from 'primeng/chips';
+import { DragDropModule } from 'primeng/dragdrop';
 
 /**
  * 用來匯入 PrimeNG 用到的元件
@@ -55,9 +58,12 @@ import { StepperModule } from 'primeng/stepper';
     CalendarModule,
     CardModule,
     CheckboxModule,
+    ChipModule,
+    ChipsModule,
     ConfirmDialogModule,
     DialogModule,
     DividerModule,
+    DragDropModule,
     DropdownModule,
     DynamicDialogModule,
     FileUploadModule,
@@ -97,10 +103,13 @@ import { StepperModule } from 'primeng/stepper';
     ButtonModule,
     CalendarModule,
     CardModule,
+    ChipModule,
+    ChipsModule,
     CheckboxModule,
     ConfirmDialogModule,
     DialogModule,
     DividerModule,
+    DragDropModule,
     DropdownModule,
     DynamicDialogModule,
     FileUploadModule,

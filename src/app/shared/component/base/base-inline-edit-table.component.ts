@@ -1,11 +1,9 @@
-import { Component, Output } from '@angular/core';
+import { Component, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SystemMessageService } from '../../../core/services/system-message.service';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Option } from '../../models/option.model';
-import { BaseTableRow } from '../../models/base-table-row.model';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { Table } from 'primeng/table';
+import { DropdownChangeEvent } from 'primeng/dropdown';
 
 /**
  * 定義基礎的 Form 表單 Component
@@ -22,6 +20,21 @@ export abstract class BaseInlineEditeTableCompoent {
    * 上方頁簽
    * */
   protected detailTabs: MenuItem[] = [];
+
+  /**
+   * Table 內部屬性，用來新增資料
+   * */
+  protected minGivenIndex = -1;
+
+  /**
+   * Cloned 資料，用來配置資料
+   */
+  protected clonedData: { [s: string]: any } = {};
+
+  /**
+   * 表格控制項
+   */
+  @ViewChild('dt') dataTable!: Table;
 
   /**
    * 表格資料
@@ -71,12 +84,6 @@ export abstract class BaseInlineEditeTableCompoent {
   protected deleteList: number[] = [];
 
   /**
-   * 根據 ID 清單刪除資料
-   *@param ids
-   */
-  protected delete(ids: number[]) {}
-
-  /**
    * 提交資料
    * @param tableData
    */
@@ -110,7 +117,7 @@ export abstract class BaseInlineEditeTableCompoent {
   /**
    * 模式: add (新增)、edit (編輯)、delete (刪除)
    */
-  protected mode!: string; // 模式
+  protected mode: string = ''; // 模式
 
   constructor() {}
 
@@ -144,6 +151,12 @@ export abstract class BaseInlineEditeTableCompoent {
   }
 
   /**
+   * 根據 ID 清單刪除資料
+   *@param rowData
+   */
+  protected remove(rowData: any) {}
+
+  /**
    * 將 json 字串轉為下拉式選單
    * @param rawString
    * @returns
@@ -166,7 +179,7 @@ export abstract class BaseInlineEditeTableCompoent {
    * @param selectedData
    * @returns true/false
    */
-  checkRowData(selectedData?: any): boolean {
+  checkRequired(selectedData?: any): boolean {
     return true;
   }
 
@@ -177,4 +190,12 @@ export abstract class BaseInlineEditeTableCompoent {
   loadDropdownData(col: any): any[] {
     return [];
   }
+
+  /**
+   * Dropdown 資料選擇事件處理
+   * @param $event
+   * @param col     欄資料
+   * @param rowData 列資料
+   */
+  onDropdownChange($event: DropdownChangeEvent, col: any, rowData: any) {}
 }

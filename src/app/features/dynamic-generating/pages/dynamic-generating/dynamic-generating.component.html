@@ -40,7 +40,7 @@
                   [options]="field.options"
                   optionLabel="label"
                   optionValue="value"
-                  placeholder="請選擇"
+                  placeholder="Please select"
                   [filter]="true"
                   filterBy="value"
                   [showClear]="true"
@@ -62,7 +62,7 @@
               <ng-container *ngSwitchCase="'autocomplete'">
                 <p-autoComplete
                   [suggestions]="allSuggestions"
-                  (completeMethod)="search($event)"
+                  (completeMethod)="search($event, field.uri)"
                   [forceSelection]="true"
                   appendTo="body"
                   [dropdown]="true"

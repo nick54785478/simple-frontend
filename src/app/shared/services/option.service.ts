@@ -49,6 +49,30 @@ export class OptionService {
   }
 
   /**
+   * 取得 AutoComplete 資料
+   * @param queryStr 查詢字串(用於模糊查詢)
+   * @param uri URI
+   * @returns
+   */
+  public getDynamicAutoCompleteData(
+    queryStr: string,
+    uri: string
+  ): Observable<AutoCompleteOption[]> {
+    const url = this.baseApiUrl;
+    let params = new HttpParams().set('queryStr', queryStr ? queryStr : '');
+    return this.http.get<AutoCompleteOption[]>(uri).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+    // return this.http.get<AutoCompleteOption[]>(url, { params }).pipe(
+    //   map((response) => {
+    //     return response;
+    //   })
+    // );
+  }
+
+  /**
    * 取得 Data Type 配置資料
    * @return Observable<MenuItem[]
    */

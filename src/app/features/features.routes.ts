@@ -9,6 +9,7 @@ import { SimplePicklistComponent } from './simple-picklist/pages/simple-picklist
 import { SimpleInlineEditComponent } from './simple-inline-edit/pages/simple-inline-edit/simple-inline-edit.component';
 import { SimpleHeaderLineTableComponent } from './simple-header-line-table/pages/simple-header-line-table/simple-header-line-table.component';
 import { DynamicGeneratingComponent } from './dynamic-generating/pages/dynamic-generating/dynamic-generating.component';
+import { SimpleKanbanComponent } from './simple-kanban/pages/simple-kanban/simple-kanban.component';
 
 /**
  * 定義 Features 子路由配置的檔案
@@ -44,6 +45,10 @@ export const routes: Routes = [
   {
     path: 'dynamic-generating',
     component: DynamicGeneratingComponent,
+  },
+  {
+    path: 'simple-kanban',
+    component: SimpleKanbanComponent,
   },
   {
     path: 'about',

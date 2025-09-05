@@ -1,0 +1,22 @@
+        :host ::ng-deep {
+            .drop-column {
+                border: 2px dashed transparent;
+                transition: border-color .2s;
+                min-height: 300px;
+
+                &.p-draggable-enter {
+                    border-color: var(--primary-color);
+                }
+            }
+
+            [pDraggable] {
+                cursor: move;
+            }
+
+            .task-card {
+                background: var(--surface-card);
+                padding: 0.5rem;
+                border-radius: 0.5rem;
+                box-shadow: var(--card-shadow);
+            }
+        }

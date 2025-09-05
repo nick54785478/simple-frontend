@@ -10,4 +10,5 @@ export interface FormField {
   placeholder: string;
   rows: string; // textArea 列
   cols: string; // textArea 行
+  uri: string; // AutoComplete 對應路徑
 }

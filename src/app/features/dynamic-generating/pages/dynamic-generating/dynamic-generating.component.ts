@@ -108,9 +108,9 @@ export class DynamicGeneratingComponent
   /**
    * AutoComplete 取資料
    * */
-  search(event: any) {
+  search(event: any, uri: string) {
     console.log(event.query);
-    this.optionService.getAutoCompleteData(event.query).subscribe({
+    this.optionService.getDynamicAutoCompleteData(event.query, uri).subscribe({
       next: (res) => {
         this.allSuggestions = res.map((item: any) => ({
           id: item.id, // 保留 id

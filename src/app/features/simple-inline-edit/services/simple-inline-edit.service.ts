@@ -3,8 +3,8 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { BaseResponse } from '../../../shared/models/base-response.model';
-import { SimpleInlineEditDataModel } from '../pages/models/simple-inline-edit-query-data.model ';
-import { SimpleInlineEditRequestData } from '../pages/models/simple-inline-edit-request-data.model';
+import { SimpleInlineEditDataModel } from '../models/simple-inline-edit-query-data.model ';
+import { SimpleInlineEditRequestData } from '../models/simple-inline-edit-request-data.model';
 
 @Injectable({
   providedIn: 'root',
