@@ -1,22 +1,133 @@
 <div class="card flex gap-3">
   <!-- Planned -->
   <div class="flex-1">
-    <h3 class="text-center">TODO ({{ todo.length }})</h3>
+    <h3 class="text-center">
+      <i
+        class="pi pi-plus clickable-icon"
+        style="color: var(--primary-color); font-size: 1rem"
+        (click)="addTask()"
+      ></i
+      >&emsp;&emsp;To Do ({{ todo.length }})
+    </h3>
+
     <div
       class="p-2 drop-column"
       pDroppable
       (onDrop)="drop(todo, 'TODO', 'todo')"
     >
       <div
-        *ngFor="let task of todo"
+        *ngFor="let task of todo; let i = index"
         class="task-card"
+        [ngClass]="{ 'dragging-card': draggedTask?.id === task.id }"
         pDraggable
         (onDragStart)="dragStart(task)"
         (onDragEnd)="dragEnd()"
+        pDroppable
+        (onDrop)="drop(todo, 'TODO', 'todo', i)"
+        (onDragOver)="dragOver($event, task, todo)"
       >
-        <h4>{{ task.title }}</h4>
-        <p><i class="pi pi-user mr-2"></i>{{ task.responsiblePerson }}</p>
-        <small>{{ task.remark }}</small>
+        <!-- 編輯中 -->
+        <div
+          *ngIf="editingTaskId === task.id; else viewMode"
+          class="p-fluid grid formgrid"
+        >
+          <!-- Title (全寬 12 格) -->
+          <div class="field col-12">
+            <input
+              type="text"
+              [(ngModel)]="clonedTask!.title"
+              placeholder="Title"
+              class="p-inputtext"
+            />
+          </div>
+
+          <!-- Person (左 6 格) -->
+          <div class="field col-6 flex align-items-center">
+            <i class="pi pi-user mr-2"></i>
+            <p-dropdown
+              [options]="persons"
+              [(ngModel)]="clonedTask!.responsiblePerson"
+              placeholder="Select Person"
+              class="flex-1"
+            ></p-dropdown>
+          </div>
+
+          <!-- Remark (全寬 12 格) -->
+          <div class="field col-12">
+            <textarea
+              class="p-inputtextarea w-full remark-text"
+              [(ngModel)]="clonedTask!.remark"
+              placeholder="Remark"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <!-- DueDate (全寬 12 格) -->
+          <div class="field col-6">
+            <p-calendar
+              [dataType]="'string'"
+              [(ngModel)]="clonedTask!.dueDate"
+              dateFormat="yy-mm-dd"
+              [readonlyInput]="true"
+              appendTo="body"
+            ></p-calendar>
+          </div>
+
+          <!-- Buttons (右對齊 12 格) -->
+          <div
+            class="field col-12 flex justify-content-between align-items-center"
+          >
+            <!-- 左側刪除 -->
+            <button
+              pButton
+              [rounded]="true"
+              [text]="true"
+              type="button"
+              icon="pi pi-trash"
+              class="p-button-danger p-button-rounded"
+              (click)="onDelete(task, 'todo')"
+            ></button>
+
+            <!-- 右側確認/取消 -->
+            <div>
+              <button
+                pButton
+                [rounded]="true"
+                [text]="true"
+                type="button"
+                icon="pi pi-check"
+                class="p-button-success p-button-rounded mr-2"
+                (click)="onSave('todo')"
+              ></button>
+              <button
+                pButton
+                [rounded]="true"
+                [text]="true"
+                type="button"
+                icon="pi pi-times"
+                class="p-button-danger p-button-rounded"
+                (click)="cancelEdit()"
+              ></button>
+            </div>
+          </div>
+        </div>
+        <!-- 顯示模式 -->
+        <ng-template #viewMode>
+          <h4 (click)="onEdit(task)">{{ task.title }}</h4>
+          <p><i class="pi pi-user mr-2"></i>{{ task.responsiblePerson }}</p>
+          <p class="remark-text">{{ task.remark }}</p>
+          <!-- 狀態 + 截止日期 -->
+          <div class="flex justify-content-between align-items-center mt-2">
+            <small style="font-weight: bold">
+              {{ statusLabels[task.status] }}
+            </small>
+
+            <!-- 截止日期 badge -->
+            <span class="p-badge p-component bg-info text-white">
+              {{ task.dueDate }}
+            </span>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>
@@ -30,15 +141,118 @@
       (onDrop)="drop(inProgress, 'IN_PROGRESS', 'inProgress')"
     >
       <div
-        *ngFor="let task of inProgress"
+        *ngFor="let task of inProgress; let i = index"
         class="task-card"
+        [ngClass]="{ 'dragging-card': draggedTask?.id === task.id }"
         pDraggable
         (onDragStart)="dragStart(task)"
         (onDragEnd)="dragEnd()"
+        pDroppable
+        (onDrop)="drop(inProgress, 'IN_PROGRESS', 'inProgress', i)"
+        (onDragOver)="dragOver($event, task, inProgress)"
       >
-        <h4>{{ task.title }}</h4>
-        <p><i class="pi pi-user mr-2"></i>{{ task.responsiblePerson }}</p>
-        <small>{{ task.remark }}</small>
+        <!-- 編輯中 -->
+        <div
+          *ngIf="editingTaskId === task.id; else viewMode"
+          class="p-fluid grid formgrid"
+        >
+          <!-- Title (全寬 12 格) -->
+          <div class="field col-12">
+            <input
+              type="text"
+              [(ngModel)]="clonedTask!.title"
+              placeholder="Title"
+              class="p-inputtext"
+            />
+          </div>
+
+          <!-- Person (左 6 格) -->
+          <div class="field col-6 flex align-items-center">
+            <i class="pi pi-user mr-2"></i>
+            <p-dropdown
+              [options]="persons"
+              [(ngModel)]="clonedTask!.responsiblePerson"
+              placeholder="Select Person"
+              class="flex-1"
+            ></p-dropdown>
+          </div>
+
+          <!-- Remark (全寬 12 格) -->
+          <div class="field col-12">
+            <textarea
+              class="p-inputtextarea w-full remark-text"
+              [(ngModel)]="clonedTask!.remark"
+              placeholder="Remark"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <!-- DueDate (全寬 12 格) -->
+          <div class="field col-6">
+            <p-calendar
+              [dataType]="'string'"
+              [(ngModel)]="clonedTask!.dueDate"
+              dateFormat="yy-mm-dd"
+              [readonlyInput]="true"
+              appendTo="body"
+            ></p-calendar>
+          </div>
+
+          <!-- Buttons (右對齊 12 格) -->
+          <div
+            class="field col-12 flex justify-content-between align-items-center"
+          >
+            <!-- 左側刪除 -->
+            <button
+              pButton
+              [rounded]="true"
+              [text]="true"
+              type="button"
+              icon="pi pi-trash"
+              class="p-button-danger p-button-rounded"
+              (click)="onDelete(task, 'inProgress')"
+            ></button>
+
+            <!-- 右側確認/取消 -->
+            <div>
+              <button
+                pButton
+                [rounded]="true"
+                [text]="true"
+                type="button"
+                icon="pi pi-check"
+                class="p-button-success p-button-rounded mr-2"
+                (click)="onSave('inProgress')"
+              ></button>
+              <button
+                pButton
+                [rounded]="true"
+                [text]="true"
+                type="button"
+                icon="pi pi-times"
+                class="p-button-danger p-button-rounded"
+                (click)="cancelEdit()"
+              ></button>
+            </div>
+          </div>
+        </div>
+        <!-- 顯示模式 -->
+        <ng-template #viewMode>
+          <h4 (click)="onEdit(task)">{{ task.title }}</h4>
+          <p><i class="pi pi-user mr-2"></i>{{ task.responsiblePerson }}</p>
+          <p class="remark-text">{{ task.remark }}</p>
+          <!-- 狀態 + 截止日期 -->
+          <div class="flex justify-content-between align-items-center mt-2">
+            <small style="font-weight: bold">
+              {{ statusLabels[task.status] }}
+            </small>
+
+            <!-- 截止日期 badge -->
+            <span class="p-badge p-component bg-info text-white">
+              {{ task.dueDate }}
+            </span>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>
@@ -52,15 +266,118 @@
       (onDrop)="drop(done, 'DONE', 'done')"
     >
       <div
-        *ngFor="let task of done"
+        *ngFor="let task of done; let i = index"
         class="task-card"
+        [ngClass]="{ 'dragging-card': draggedTask?.id === task.id }"
         pDraggable
         (onDragStart)="dragStart(task)"
         (onDragEnd)="dragEnd()"
+        pDroppable
+        (onDrop)="drop(done, 'DONE', 'done', i)"
+        (onDragOver)="dragOver($event, task, done)"
       >
-        <h4>{{ task.title }}</h4>
-        <p><i class="pi pi-user mr-2"></i>{{ task.responsiblePerson }}</p>
-        <small>{{ task.remark }}</small>
+        <!-- 編輯中 -->
+        <div
+          *ngIf="editingTaskId === task.id; else viewMode"
+          class="p-fluid grid formgrid"
+        >
+          <!-- Title (全寬 12 格) -->
+          <div class="field col-12">
+            <p-dropdown
+              [options]="persons"
+              [(ngModel)]="clonedTask!.responsiblePerson"
+              placeholder="Select Person"
+              class="flex-1"
+            ></p-dropdown>
+          </div>
+
+          <!-- Person (左 6 格) -->
+          <div class="field col-6 flex align-items-center">
+            <i class="pi pi-user mr-2"></i>
+            <input
+              type="text"
+              [(ngModel)]="clonedTask!.responsiblePerson"
+              placeholder="Person"
+              class="p-inputtext flex-1"
+            />
+          </div>
+
+          <!-- Remark (全寬 12 格) -->
+          <div class="field col-12">
+            <textarea
+              class="p-inputtextarea w-full remark-text"
+              [(ngModel)]="clonedTask!.remark"
+              placeholder="Remark"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <!-- DueDate (全寬 12 格) -->
+          <div class="field col-6">
+            <p-calendar
+              [dataType]="'string'"
+              [(ngModel)]="clonedTask!.dueDate"
+              dateFormat="yy-mm-dd"
+              [readonlyInput]="true"
+              appendTo="body"
+            ></p-calendar>
+          </div>
+
+          <!-- Buttons (右對齊 12 格) -->
+          <div
+            class="field col-12 flex justify-content-between align-items-center"
+          >
+            <!-- 左側刪除 -->
+            <button
+              pButton
+              [rounded]="true"
+              [text]="true"
+              type="button"
+              icon="pi pi-trash"
+              class="p-button-danger p-button-rounded"
+              (click)="onDelete(task, 'done')"
+            ></button>
+
+            <!-- 右側確認/取消 -->
+            <div>
+              <button
+                pButton
+                [rounded]="true"
+                [text]="true"
+                type="button"
+                icon="pi pi-check"
+                class="p-button-success p-button-rounded mr-2"
+                (click)="onSave('done')"
+              ></button>
+              <button
+                pButton
+                [rounded]="true"
+                [text]="true"
+                type="button"
+                icon="pi pi-times"
+                class="p-button-danger p-button-rounded"
+                (click)="cancelEdit()"
+              ></button>
+            </div>
+          </div>
+        </div>
+        <!-- 顯示模式 -->
+        <ng-template #viewMode>
+          <h4 (click)="onEdit(task)">{{ task.title }}</h4>
+          <p><i class="pi pi-user mr-2"></i>{{ task.responsiblePerson }}</p>
+          <p class="remark-text">{{ task.remark }}</p>
+          <!-- 狀態 + 截止日期 -->
+          <div class="flex justify-content-between align-items-center mt-2">
+            <small style="font-weight: bold">
+              {{ statusLabels[task.status] }}
+            </small>
+
+            <!-- 截止日期 badge -->
+            <span class="p-badge p-component bg-info text-white">
+              {{ task.dueDate }}
+            </span>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>

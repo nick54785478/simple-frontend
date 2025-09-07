@@ -1,22 +1,53 @@
-        :host ::ng-deep {
-            .drop-column {
-                border: 2px dashed transparent;
-                transition: border-color .2s;
-                min-height: 300px;
+:host ::ng-deep {
+  .drop-column {
+    border: 2px dashed transparent;
+    transition: border-color 0.2s;
+    min-height: 300px;
 
-                &.p-draggable-enter {
-                    border-color: var(--primary-color);
-                }
-            }
+    &.p-draggable-enter {
+      border-color: var(--primary-color);
+    }
+  }
 
-            [pDraggable] {
-                cursor: move;
-            }
+  [pDraggable] {
+    cursor: move;
+  }
 
-            .task-card {
-                background: var(--surface-card);
-                padding: 0.5rem;
-                border-radius: 0.5rem;
-                box-shadow: var(--card-shadow);
-            }
-        }
+  .task-card {
+    background: #ffffff;
+    /* 純白 */
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+    color: #333;
+    /* 正常字體顏色 */
+    .remark-text {
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+  }
+
+  /* 拖曳中的卡片凸顯效果 */
+  .dragging-card {
+    transform: scale(1.05);
+    /* 卡片放大 */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    /* 陰影加深 */
+    z-index: 1000;
+    /* 浮在上方 */
+    background: #ffffff;
+    /* 白色保持 */
+    font-weight: 600;
+    /* 字體加粗 */
+    color: #000;
+    /* 字體顏色加深 */
+  }
+
+  .clickable-icon {
+    color: var(--primary-color);
+    font-size: 1rem;
+    cursor: pointer;
+  }
+}
