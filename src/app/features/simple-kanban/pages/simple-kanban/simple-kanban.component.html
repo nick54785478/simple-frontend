@@ -19,6 +19,7 @@
         *ngFor="let task of todo; let i = index"
         class="task-card"
         [ngClass]="{ 'dragging-card': draggedTask?.id === task.id }"
+        [class.flash]="task.flash"
         pDraggable
         (onDragStart)="dragStart(task)"
         (onDragEnd)="dragEnd()"
@@ -143,6 +144,7 @@
       <div
         *ngFor="let task of inProgress; let i = index"
         class="task-card"
+        [class.flash]="task.flash"
         [ngClass]="{ 'dragging-card': draggedTask?.id === task.id }"
         pDraggable
         (onDragStart)="dragStart(task)"
@@ -268,6 +270,7 @@
       <div
         *ngFor="let task of done; let i = index"
         class="task-card"
+        [class.flash]="task.flash"
         [ngClass]="{ 'dragging-card': draggedTask?.id === task.id }"
         pDraggable
         (onDragStart)="dragStart(task)"

@@ -128,6 +128,12 @@ export class SimpleKanbanComponent implements OnInit {
         this[listName] = newList;
       }
 
+      // 用局部變數記住被 drop 的卡片
+      const droppedTask = this.draggedTask;
+
+      droppedTask.flash = true;
+      setTimeout(() => (droppedTask.flash = false), 1500); // 動畫時間可以調長一點
+
       this.draggedTask = null;
     }
   }

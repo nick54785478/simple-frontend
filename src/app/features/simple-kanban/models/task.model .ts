@@ -5,4 +5,5 @@ export interface Task {
   responsiblePerson: string;
   dueDate: string;
   remark: string;
+  flash?: boolean; // 閃光特效控制
 }

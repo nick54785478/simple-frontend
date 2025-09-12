@@ -14,18 +14,35 @@
   }
 
   .task-card {
-    background: #ffffff;
-    /* 純白 */
+    background: #ffffff; // 純白
+    border: 1px solid #ddd;
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     padding: 1rem;
     margin-bottom: 0.5rem;
     transition: all 0.2s ease;
     color: #333;
+
     /* 正常字體顏色 */
+
     .remark-text {
       font-size: 1.1rem;
       line-height: 1.4;
+    }
+  }
+
+  .flash {
+    animation: flashBorder 1.5s ease;
+  }
+
+  @keyframes flashBorder {
+    0% {
+      border: 2px solid var(--primary-color);
+      box-shadow: 0 0 10px var(--primary-color);
+    }
+    100% {
+      border: 1px solid #ddd;
+      box-shadow: none;
     }
   }
 
