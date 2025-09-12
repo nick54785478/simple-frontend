@@ -1,0 +1,38 @@
+<div class="grid">
+  <div class="col-12 md:col-4">
+    <p-panel [showHeader]="false">
+      <div class="card flex justify-center">
+        <p-chart
+          type="pie"
+          [data]="data"
+          [options]="options"
+          class="w-full md:w-[30rem]"
+        />
+      </div>
+    </p-panel>
+  </div>
+  <div class="col-12 md:col-4">
+    <p-panel [showHeader]="false">
+      <div class="card flex justify-center">
+        <p-chart
+          type="doughnut"
+          [data]="data"
+          [options]="options"
+          class="w-full md:w-[30rem]"
+        />
+      </div>
+    </p-panel>
+  </div>
+  <div class="col-12 md:col-4">
+    <p-panel [showHeader]="false">
+      <div class="card flex justify-center">
+        <p-chart
+          type="polarArea"
+          [data]="data"
+          [options]="options"
+          class="w-full md:w-[30rem]"
+        />
+      </div>
+    </p-panel>
+  </div>
+</div>

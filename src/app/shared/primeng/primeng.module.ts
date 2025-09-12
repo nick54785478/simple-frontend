@@ -44,6 +44,7 @@ import { StepperModule } from 'primeng/stepper';
 import { ChipModule } from 'primeng/chip';
 import { ChipsModule } from 'primeng/chips';
 import { DragDropModule } from 'primeng/dragdrop';
+import { ChartModule } from 'primeng/chart';
 
 /**
  * 用來匯入 PrimeNG 用到的元件
@@ -57,6 +58,7 @@ import { DragDropModule } from 'primeng/dragdrop';
     ButtonModule,
     CalendarModule,
     CardModule,
+    ChartModule,
     CheckboxModule,
     ChipModule,
     ChipsModule,
@@ -103,6 +105,7 @@ import { DragDropModule } from 'primeng/dragdrop';
     ButtonModule,
     CalendarModule,
     CardModule,
+    ChartModule,
     ChipModule,
     ChipsModule,
     CheckboxModule,
