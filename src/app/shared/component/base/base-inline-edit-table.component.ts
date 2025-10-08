@@ -1,9 +1,11 @@
-import { Component, Output, ViewChild } from '@angular/core';
+import { Component, inject, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Option } from '../../models/option.model';
 import { Table } from 'primeng/table';
 import { DropdownChangeEvent } from 'primeng/dropdown';
+import { SystemMessageService } from '../../../core/services/system-message.service';
+import { LoadingMaskService } from '../../../core/services/loading-mask.service';
 
 /**
  * 定義基礎的 Form 表單 Component
@@ -15,7 +17,10 @@ import { DropdownChangeEvent } from 'primeng/dropdown';
   providers: [],
   template: '',
 })
-export abstract class BaseInlineEditeTableCompoent {
+export abstract class BaseInlineEditTableCompoent {
+  protected loadingMaskService = inject(LoadingMaskService);
+  protected messageService = inject(SystemMessageService);
+
   /**
    * 上方頁簽
    * */

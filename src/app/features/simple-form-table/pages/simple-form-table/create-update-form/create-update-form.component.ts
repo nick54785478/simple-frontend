@@ -21,8 +21,7 @@ export class CreateUpdateFormComponent
   constructor(
     private location: Location,
     private dialogConfig: DynamicDialogConfig,
-    public ref: DynamicDialogRef,
-    private messageService: SystemMessageService
+    public ref: DynamicDialogRef
   ) {
     super();
   }

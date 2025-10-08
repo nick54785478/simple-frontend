@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { SystemMessageService } from '../../../core/services/system-message.service';
+import { LoadingMaskService } from '../../../core/services/loading-mask.service';
 
 /**
  * 定義基礎的 Form 表單 Component
@@ -13,6 +15,8 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
   template: '',
 })
 export abstract class BaseFormCompoent {
+  protected loadingMaskService = inject(LoadingMaskService);
+  protected messageService = inject(SystemMessageService);
   // 定義 Form Group
   protected formGroup!: FormGroup;
 

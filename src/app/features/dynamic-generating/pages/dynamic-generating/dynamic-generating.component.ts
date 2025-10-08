@@ -35,9 +35,7 @@ export class DynamicGeneratingComponent
   constructor(
     private fb: FormBuilder,
     private optionService: OptionService,
-    private dynamicGeneratingService: DynamicGeneratingService,
-    private messageService: SystemMessageService,
-    private loadingMaskService: LoadingMaskService
+    private dynamicGeneratingService: DynamicGeneratingService
   ) {
     super();
   }

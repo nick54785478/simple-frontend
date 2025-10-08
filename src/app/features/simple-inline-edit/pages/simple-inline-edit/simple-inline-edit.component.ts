@@ -1,5 +1,5 @@
 import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
-import { BaseInlineEditeTableCompoent } from '../../../../shared/component/base/base-inline-edit-table.component';
+import { BaseInlineEditTableCompoent } from '../../../../shared/component/base/base-inline-edit-table.component';
 import { MenuItem } from 'primeng/api';
 import { Option } from '../../../../shared/models/option.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -27,7 +27,7 @@ import { SimpleInlineEditRequestData } from '../../models/simple-inline-edit-req
   styleUrl: './simple-inline-edit.component.scss',
 })
 export class SimpleInlineEditComponent
-  extends BaseInlineEditeTableCompoent
+  extends BaseInlineEditTableCompoent
   implements OnInit, DoCheck, OnDestroy
 {
   dropdownDataList: Option[] = []; // 下拉式選單資料
@@ -40,8 +40,6 @@ export class SimpleInlineEditComponent
 
   constructor(
     private optionService: OptionService,
-    private messageService: SystemMessageService,
-    private loadingMaskService: LoadingMaskService,
     private dialogConfirmService: DialogConfirmService,
     private simpleInlineEditService: SimpleInlineEditService
   ) {
@@ -282,9 +280,6 @@ export class SimpleInlineEditComponent
     this.selectedData = rowData;
   }
 
-  /**
-   * 取消編輯/新增
-   * */
   /**
    * 取消編輯/新增
    * */

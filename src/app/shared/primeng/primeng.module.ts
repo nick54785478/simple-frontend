@@ -45,6 +45,8 @@ import { ChipModule } from 'primeng/chip';
 import { ChipsModule } from 'primeng/chips';
 import { DragDropModule } from 'primeng/dragdrop';
 import { ChartModule } from 'primeng/chart';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { OrganizationChartModule } from 'primeng/organizationchart';
 
 /**
  * 用來匯入 PrimeNG 用到的元件
@@ -63,6 +65,7 @@ import { ChartModule } from 'primeng/chart';
     ChipModule,
     ChipsModule,
     ConfirmDialogModule,
+    ContextMenuModule,
     DialogModule,
     DividerModule,
     DragDropModule,
@@ -79,6 +82,7 @@ import { ChartModule } from 'primeng/chart';
     MenuModule,
     MessagesModule,
     MultiSelectModule,
+    OrganizationChartModule,
     PanelModule,
     PasswordModule,
     PickListModule,
@@ -110,6 +114,7 @@ import { ChartModule } from 'primeng/chart';
     ChipsModule,
     CheckboxModule,
     ConfirmDialogModule,
+    ContextMenuModule,
     DialogModule,
     DividerModule,
     DragDropModule,
@@ -126,6 +131,7 @@ import { ChartModule } from 'primeng/chart';
     MessagesModule,
     MenuModule,
     MultiSelectModule,
+    OrganizationChartModule,
     PanelModule,
     PasswordModule,
     PickListModule,

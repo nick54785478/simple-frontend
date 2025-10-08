@@ -11,6 +11,7 @@ import { SimpleHeaderLineTableComponent } from './simple-header-line-table/pages
 import { DynamicGeneratingComponent } from './dynamic-generating/pages/dynamic-generating/dynamic-generating.component';
 import { SimpleKanbanComponent } from './simple-kanban/pages/simple-kanban/simple-kanban.component';
 import { SimpleChartComponent } from './simple-chart/simple-chart.component';
+import { SimpleFtaComponent } from './simple-fta/pages/simple-fta/simple-fta.component';
 
 /**
  * 定義 Features 子路由配置的檔案
@@ -54,6 +55,10 @@ export const routes: Routes = [
   {
     path: 'simple-chart',
     component: SimpleChartComponent,
+  },
+  {
+    path: 'simple-fta',
+    component: SimpleFtaComponent,
   },
   {
     path: 'about',

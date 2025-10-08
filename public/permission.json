@@ -62,11 +62,18 @@
     "routerLink": "/simple-kanban",
     "visible": true
   },
-    {
+  {
     "label": "圖形範例",
     "icon": "",
     "url": "/simple-chart",
     "routerLink": "/simple-chart",
+    "visible": true
+  },
+  {
+    "label": "FTA 範例",
+    "icon": "",
+    "url": "/simple-fta",
+    "routerLink": "/simple-fta",
     "visible": true
   },
   {
