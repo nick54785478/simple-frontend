@@ -47,6 +47,7 @@ import { DragDropModule } from 'primeng/dragdrop';
 import { ChartModule } from 'primeng/chart';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { OrganizationChartModule } from 'primeng/organizationchart';
+import { AccordionModule } from 'primeng/accordion';
 
 /**
  * 用來匯入 PrimeNG 用到的元件
@@ -55,6 +56,7 @@ import { OrganizationChartModule } from 'primeng/organizationchart';
   declarations: [],
   imports: [
     CommonModule,
+    AccordionModule,
     AutoCompleteModule,
     AutoFocusModule,
     ButtonModule,
@@ -104,6 +106,7 @@ import { OrganizationChartModule } from 'primeng/organizationchart';
     TreeModule,
   ],
   exports: [
+    AccordionModule,
     AutoCompleteModule,
     AutoFocusModule,
     ButtonModule,

@@ -76,6 +76,13 @@
     "routerLink": "/simple-fta",
     "visible": true
   },
+   {
+    "label": "簡單問卷",
+    "icon": "",
+    "url": "/simple-qa",
+    "routerLink": "/simple-qa",
+    "visible": true
+  },
   {
     "label": "關於",
     "icon": "",

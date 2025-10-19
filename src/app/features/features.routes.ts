@@ -12,6 +12,7 @@ import { DynamicGeneratingComponent } from './dynamic-generating/pages/dynamic-g
 import { SimpleKanbanComponent } from './simple-kanban/pages/simple-kanban/simple-kanban.component';
 import { SimpleChartComponent } from './simple-chart/simple-chart.component';
 import { SimpleFtaComponent } from './simple-fta/pages/simple-fta/simple-fta.component';
+import { SimpleQaComponent } from './simple-qa/pages/simple-qa/simple-qa.component';
 
 /**
  * 定義 Features 子路由配置的檔案
@@ -59,6 +60,10 @@ export const routes: Routes = [
   {
     path: 'simple-fta',
     component: SimpleFtaComponent,
+  },
+  {
+    path: 'simple-qa',
+    component: SimpleQaComponent,
   },
   {
     path: 'about',

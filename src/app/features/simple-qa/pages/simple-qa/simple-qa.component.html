@@ -1,0 +1,48 @@
+<div class="p-fluid qna-container">
+  <p-accordion>
+    <p-accordionTab
+      *ngFor="let q of questions; let i = index"
+      [header]="q.title"
+    >
+      <div class="p-field p-mb-3">
+        <p class="qna-question">{{ q.text }} <span class="required"></span></p>
+
+        <textarea
+          pInputTextarea
+          [(ngModel)]="q.answer"
+          name="answer{{ i }}"
+          placeholder="請輸入你的回答..."
+          autoResize="true"
+          rows="5"
+          class="qna-textarea"
+          [ngClass]="{ 'invalid-field': submitted && !q.answer }"
+        ></textarea>
+
+        <!-- 錯誤提示 -->
+        <small *ngIf="submitted && !q.answer" class="p-error">
+          此欄位為必填
+        </small>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+
+  <div class="p-mt-4 p-text-right qna-buttons">
+    <button
+      pButton
+      type="button"
+      label="清空全部"
+      icon="pi pi-refresh"
+      class="p-button-secondary p-mr-2"
+      (click)="clearAll()"
+    ></button>
+
+    <button
+      pButton
+      type="button"
+      label="送出答案"
+      icon="pi pi-check"
+      [disabled]="!isFormValid()"
+      (click)="submit()"
+    ></button>
+  </div>
+</div>
