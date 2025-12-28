@@ -81,7 +81,7 @@ export class SimpleInlineEditComponent
     ];
   }
 
-  async ngOnInit(): Promise<void> {
+  override async ngOnInit(): Promise<void> {
     // 初始化表單
     this.formGroup = new FormGroup({
       dropdownData: new FormControl('', [Validators.required]), // 下拉式選單
@@ -102,6 +102,8 @@ export class SimpleInlineEditComponent
       {
         field: 'field1',
         header: 'header1',
+        width: '10rem',
+
         type: 'inputText',
         data: '',
       },
@@ -109,30 +111,35 @@ export class SimpleInlineEditComponent
         field: 'field2',
         header: 'header2',
         type: 'autoComplete',
+        width: '10rem',
         data: '',
       },
       {
         field: 'field3',
         header: 'header3',
         type: 'dropdown',
+        width: '10rem',
         data: 'dropdownDataList',
       },
       {
         field: 'field4',
         header: 'header4',
         type: 'inputNumber',
+        width: '10rem',
         data: '',
       },
       {
         field: 'field5',
         header: 'header5',
         type: 'textArea',
+        width: '10rem',
         data: '',
       },
       {
         field: 'field6',
         header: 'header6',
         type: 'inputTime',
+        width: '10rem',
         data: '',
       },
     ];
@@ -171,7 +178,8 @@ export class SimpleInlineEditComponent
       },
     ];
   }
-  ngOnDestroy(): void {}
+
+  override ngOnDestroy(): void {}
 
   /**
    * 新增一筆空的 row 資料

@@ -1,4 +1,11 @@
-import { Component, inject, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Option } from '../../models/option.model';
@@ -11,13 +18,13 @@ import { LoadingMaskService } from '../../../core/services/loading-mask.service'
  * 定義基礎的 Form 表單 Component
  */
 @Component({
-  selector: 'app-base-form-compoent',
+  selector: 'app-base-inline-edit-table-compoent',
   standalone: true,
   imports: [],
   providers: [],
   template: '',
 })
-export abstract class BaseInlineEditTableCompoent {
+export abstract class BaseInlineEditTableCompoent implements OnInit, OnDestroy {
   protected loadingMaskService = inject(LoadingMaskService);
   protected messageService = inject(SystemMessageService);
 
@@ -84,6 +91,11 @@ export abstract class BaseInlineEditTableCompoent {
   protected submitted: boolean = false;
 
   /**
+   * 用於控制 Dialog 是否開啟的 flag
+   */
+  protected dialogOpened: boolean = false;
+
+  /**
    * 刪除 ID 清單
    */
   protected deleteList: number[] = [];
@@ -125,6 +137,18 @@ export abstract class BaseInlineEditTableCompoent {
   protected mode: string = ''; // 模式
 
   constructor() {}
+
+  /**
+   * OnInit 初始化動作
+   */
+  ngOnInit(): void {
+    this.resetState(); // 初始化
+  }
+
+  /**
+   * OnDestroy 用於 Component 生命週期結束前的動作
+   */
+  ngOnDestroy(): void {}
 
   /**
    * Patch FormGroup 的值
@@ -203,4 +227,27 @@ export abstract class BaseInlineEditTableCompoent {
    * @param rowData 列資料
    */
   onDropdownChange($event: DropdownChangeEvent, col: any, rowData: any) {}
+
+  /**
+   * 初始化狀態
+   */
+  private resetState() {
+    this.dialogOpened = false;
+    this.detailTabs = [];
+    this.minGivenIndex = -1;
+    this.clonedData = {};
+    this.tableData = [];
+    this.cols = [];
+    this.selectedData = null;
+    this.selectedIndex = -1;
+    this.editingRow = null;
+    this.editingIndex = -1;
+    this.formGroup = new FormGroup({});
+    this.submitted = false;
+    this.deleteList = [];
+    this.detailTabColumns = [];
+    this.newRow = null;
+    this.newRowIndexes = [];
+    this.mode = '';
+  }
 }

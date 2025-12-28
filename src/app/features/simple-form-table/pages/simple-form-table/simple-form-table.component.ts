@@ -48,8 +48,6 @@ export class SimpleFormTableComponent
 {
   dropdownDataList: Option[] = []; // 下拉式選單資料
   autoCompleteList: Option[] = []; // autoComplete 選單資料
-  rowActionMenu: MenuItem[] = []; // Table Row Actions 選單。
-  rowCurrentData: any; // 現在選取的那一筆
 
   /**
    * 用來取消訂閱
@@ -68,7 +66,7 @@ export class SimpleFormTableComponent
   ) {
     super();
   }
-  async ngOnInit(): Promise<void> {
+  override async ngOnInit(): Promise<void> {
     // 初始化表單
     this.formGroup = new FormGroup({
       dropdownData: new FormControl('', [Validators.required]), // 下拉式選單
@@ -95,7 +93,7 @@ export class SimpleFormTableComponent
     ];
   }
 
-  ngOnDestroy(): void {
+  override ngOnDestroy(): void {
     this.autoCompleteDataSubject$.unsubscribe;
     // 保證組件銷毀時關閉 Dialog
     if (this.dynamicDialogRef) {

@@ -40,7 +40,6 @@ export class SimplePicklistComponent
   extends BasePickListCompoent
   implements OnInit
 {
-  dialogOpened!: boolean; // 是否開啟 Dialog
   suggestions: AutoCompleteOption[] = [];
   // AutoComplete 與其下拉欄位值變動的 Subject，用來避免前次查詢較慢返回覆蓋後次資料
   private autoCompleteDataSubject$ = new Subject<string>();
@@ -57,7 +56,7 @@ export class SimplePicklistComponent
   ) {
     super();
   }
-  ngOnInit(): void {
+  override ngOnInit(): void {
     // 監聽上一頁切換，關閉 Dialog
     this.location.onUrlChange(() => {
       this.closeFormDialog();

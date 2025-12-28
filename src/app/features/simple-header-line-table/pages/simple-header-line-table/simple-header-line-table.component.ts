@@ -54,7 +54,7 @@ export class SimpleHeaderLineTableComponent
     super();
   }
 
-  async ngOnInit(): Promise<void> {
+  override async ngOnInit(): Promise<void> {
     // 初始化表單
     this.formGroup = new FormGroup({
       dropdownData: new FormControl('', [Validators.required]), // 下拉式選單
@@ -89,7 +89,7 @@ export class SimpleHeaderLineTableComponent
     ];
   }
 
-  ngOnDestroy(): void {}
+  override ngOnDestroy(): void {}
 
   /**
    * AutoComplete 取資料方法

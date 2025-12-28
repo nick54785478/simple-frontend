@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SystemMessageService } from '../../../core/services/system-message.service';
@@ -10,13 +10,13 @@ import { ContextMenu } from 'primeng/contextmenu';
  * 定義基礎的 Form 表單 Component
  */
 @Component({
-  selector: 'app-base-form-compoent',
+  selector: 'app-base-fta-compoent',
   standalone: true,
   imports: [],
   providers: [],
   template: '',
 })
-export abstract class BaseFtaCompoent {
+export abstract class BaseFtaCompoent implements OnInit, OnDestroy {
   protected loadingMaskService = inject(LoadingMaskService);
   protected messageService = inject(SystemMessageService);
 
@@ -41,6 +41,11 @@ export abstract class BaseFtaCompoent {
    * 選擇的節點
    */
   protected selectedNode: TreeNode | null = null;
+
+  /**
+   * 用來判斷是否開啟 Dialog
+   */
+  dialogOpened: boolean = false;
 
   /**
    * 監聽 ContextMenu Component
@@ -84,6 +89,18 @@ export abstract class BaseFtaCompoent {
   protected formAction!: string;
 
   constructor() {}
+
+  /**
+   * OnInit 初始化動作
+   */
+  ngOnInit(): void {
+    this.resetState(); // 初始化
+  }
+
+  /**
+   * OnDestroy 用於 Component 生命週期結束前的動作
+   */
+  ngOnDestroy(): void {}
 
   /**
    * Patch FormGroup 的值
@@ -208,4 +225,13 @@ export abstract class BaseFtaCompoent {
    * 取消
    */
   cancel() {}
+
+  /**
+   * 初始化狀態
+   */
+  private resetState() {
+    this.dialogOpened = false;
+    this.formGroup = new FormGroup({});
+    this.submitted = false;
+  }
 }

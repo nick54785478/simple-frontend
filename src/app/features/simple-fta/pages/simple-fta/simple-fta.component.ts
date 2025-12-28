@@ -21,7 +21,7 @@ export class SimpleFtaComponent extends BaseFtaCompoent implements OnInit {
     super();
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.formGroup = new FormGroup({
       title: new FormControl('', [Validators.required]),
     });

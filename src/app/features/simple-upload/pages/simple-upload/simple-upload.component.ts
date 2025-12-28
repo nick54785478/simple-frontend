@@ -27,16 +27,16 @@ export class SimpleUploadComponent
 
   override sheetNameOptions: any[] = [];
 
-  ngOnInit(): void {
+  constructor(private uploadService: UploadService) {
+    super();
+  }
+
+  override ngOnInit(): void {
     // 上方查詢用表單
     this.formGroup = new FormGroup({
       fileName: new FormControl('', [Validators.required]),
       sheetName: new FormControl('', [Validators.required]),
     });
-  }
-
-  constructor(private uploadService: UploadService) {
-    super();
   }
 
   /**

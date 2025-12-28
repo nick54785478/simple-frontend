@@ -1,19 +1,20 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SystemMessageService } from '../../../core/services/system-message.service';
 import { LoadingMaskService } from '../../../core/services/loading-mask.service';
+import { MenuItem } from 'primeng/api';
 
 /**
  * 定義基礎的 Form 表單及 Table 表格 Component
  */
 @Component({
-  selector: 'app-base-table-form-compoent',
+  selector: 'app-base-form-table-compoent',
   standalone: true,
   imports: [],
   providers: [],
   template: '',
 })
-export abstract class BaseFormTableCompoent {
+export abstract class BaseFormTableCompoent implements OnInit, OnDestroy {
   protected loadingMaskService = inject(LoadingMaskService);
   protected messageService = inject(SystemMessageService);
   /**
@@ -21,7 +22,10 @@ export abstract class BaseFormTableCompoent {
    * */
   protected formGroup!: FormGroup;
 
-  protected submitted: boolean = false; // 用於 Submit 用
+  /**
+   * 用於 Submit 用
+   * */
+  protected submitted: boolean = false;
   /**
    * 表單動作
    * */
@@ -35,19 +39,41 @@ export abstract class BaseFormTableCompoent {
   /**
    * 表格資料
    */
-  tableData: any;
+  tableData: any[] = [];
 
   /**
-   * 選擇的 row data
+   * 上方頁簽(若有需要使用時可使用這個參數)
+   * */
+  detailTabs: MenuItem[] = [];
+
+  /**
+   * 現在選取的那一筆
    */
-  selectedData: any;
+  rowCurrentData: any;
 
   /**
    * 是否開啟 Dialog
    */
   protected dialogOpened: boolean = false;
 
+  /**
+   * Table Row Actions 選單
+   */
+  rowActionMenu: MenuItem[] = [];
+
   constructor() {}
+
+  /**
+   * OnInit 初始化動作
+   */
+  ngOnInit(): void {
+    this.resetState(); // 初始化
+  }
+
+  /**
+   * OnDestroy 用於 Component 生命週期結束前的動作
+   */
+  ngOnDestroy(): void {}
 
   /**
    * Patch FormGroup 的值
@@ -83,6 +109,18 @@ export abstract class BaseFormTableCompoent {
    * @param rowData 點選的資料
    */
   clickRowActionMenu(rowData: any): void {
-    this.selectedData = rowData;
+    this.rowCurrentData = rowData;
+  }
+
+  /**
+   * 初始化狀態
+   */
+  private resetState() {
+    this.dialogOpened = false;
+    this.detailTabs = [];
+    this.tableData = [];
+    this.cols = [];
+    this.formGroup = new FormGroup({});
+    this.submitted = false;
   }
 }

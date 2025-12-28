@@ -40,7 +40,7 @@ export class DynamicGeneratingComponent
     super();
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.initialize();
   }
 

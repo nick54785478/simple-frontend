@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SystemMessageService } from '../../../core/services/system-message.service';
@@ -14,17 +14,43 @@ import { LoadingMaskService } from '../../../core/services/loading-mask.service'
   providers: [],
   template: '',
 })
-export abstract class BaseFormCompoent {
+export abstract class BaseFormCompoent implements OnInit, OnDestroy {
   protected loadingMaskService = inject(LoadingMaskService);
   protected messageService = inject(SystemMessageService);
-  // 定義 Form Group
+
+  /**
+   * 定義 Form Group
+   * */
   protected formGroup!: FormGroup;
 
-  protected submitted: boolean = false; // 用於 Submit 用
+  /**
+   * 用於 Submit 用
+   */
+  protected submitted: boolean = false;
 
-  protected formAction!: string; // 表單動作
+  /**
+   * 表單動作
+   */
+  protected formAction!: string;
+
+  /**
+   * 是否開啟 Dialog
+   */
+  protected dialogOpened: boolean = false;
 
   constructor() {}
+
+  /**
+   * OnInit 初始化動作
+   */
+  ngOnInit(): void {
+    this.resetState(); // 初始化
+  }
+
+  /**
+   * OnDestroy 用於 Component 生命週期結束前的動作
+   */
+  ngOnDestroy(): void {}
 
   /**
    * Patch FormGroup 的值
@@ -53,5 +79,14 @@ export abstract class BaseFormCompoent {
     } else {
       return false;
     }
+  }
+
+  /**
+   * 初始化狀態
+   */
+  private resetState() {
+    this.dialogOpened = false;
+    this.formGroup = new FormGroup({});
+    this.submitted = false;
   }
 }

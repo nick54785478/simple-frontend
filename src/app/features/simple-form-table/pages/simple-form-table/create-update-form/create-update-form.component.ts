@@ -26,7 +26,7 @@ export class CreateUpdateFormComponent
     super();
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     // 透過 dialogConfig 取得傳遞來的資料
     this.formAction = this.dialogConfig.data['action'];
     console.log(this.formAction);
@@ -36,7 +36,7 @@ export class CreateUpdateFormComponent
     });
   }
 
-  ngOnDestroy(): void {}
+  override ngOnDestroy(): void {}
 
   /**
    * 提交資料

@@ -151,7 +151,11 @@
       dataKey="givenIndex"
       editMode="row"
       [resizableColumns]="true"
-      [tableStyle]="{ 'min-width': '50rem' }"
+      [tableStyle]="{
+        'table-layout': 'fixed',
+        width: '100%'
+      }"
+      [frozenWidth]="'120px'"
     >
       <!-- scrollDirection="both"  [resizableColumns]="true"-->
 
@@ -161,28 +165,14 @@
           <th
             *ngFor="let col of columns"
             [pSortableColumn]="col.field"
-            style="
-              min-width: 100% !important;
-              max-width: 100% !important;
-              width: 500px !important;
-            "
+            [style.width]="col.width"
           >
             <ng-container
               >{{ col.header }}
               <!-- <p-sortIcon [field]="col.field"/> -->
             </ng-container>
           </th>
-          <th
-            alignFrozen="right"
-            pFrozenColumn
-            style="
-              min-width: 125px !important;
-              max-width: 2rem !important;
-              width: 200px !important;
-            "
-          >
-            Actions
-          </th>
+          <th alignFrozen="right" pFrozenColumn style="width: 80px">Actions</th>
         </tr>
       </ng-template>
       <ng-template
@@ -194,20 +184,23 @@
         let-rowIndex="rowIndex"
       >
         <tr [pEditableRow]="rowData">
-          <td *ngFor="let col of columns">
+          <td
+            *ngFor="let col of columns"
+            [ngStyle]="{
+              'word-break': 'break-all',
+              'word-wrap': 'break-word',
+            }"
+            [style.width]="col.width"
+          >
             <p-cellEditor>
               <ng-template #input pTemplate="input">
                 <ng-container [ngSwitch]="col.type">
                   <!-- inputText -->
                   <input
+                    [style]="{ width: '100%' }"
                     name="{{ col.field }}-{{ rowIndex }}"
                     #ctrl="ngModel"
                     [ngClass]="{ 'ng-invalid': ctrl.invalid && ctrl.touched }"
-                    [style]="{
-                      'word-wrap': 'break-word',
-                      'max-width': '2rem',
-                      'min-width': '100%'
-                    }"
                     *ngSwitchCase="'inputText'"
                     pInputText
                     type="text"
@@ -216,16 +209,40 @@
                     [readonly]="col.readOnly"
                   />
 
-                  <!-- textArea -->
-                  <textarea
+                  <!-- inputTime -->
+                  <input
+                    [style]="{ width: '100%' }"
                     name="{{ col.field }}-{{ rowIndex }}"
                     #ctrl="ngModel"
                     [ngClass]="{ 'ng-invalid': ctrl.invalid && ctrl.touched }"
-                    [style]="{
-                      'word-wrap': 'break-word',
-                      'max-width': '2rem',
-                      'min-width': '100%'
-                    }"
+                    *ngSwitchCase="'inputTime'"
+                    pInputText
+                    type="time"
+                    [(ngModel)]="rowData[col.field]"
+                    [required]="col.required"
+                    [readonly]="col.readOnly"
+                  />
+
+                  <!-- inputNumber -->
+                  <input
+                    [style]="{ width: '100%' }"
+                    name="{{ col.field }}-{{ rowIndex }}"
+                    #ctrl="ngModel"
+                    [ngClass]="{ 'ng-invalid': ctrl.invalid && ctrl.touched }"
+                    *ngSwitchCase="'inputNumber'"
+                    pInputText
+                    type="number"
+                    [(ngModel)]="rowData[col.field]"
+                    [required]="col.required"
+                    [readonly]="col.readOnly"
+                  />
+
+                  <!-- textArea -->
+                  <textarea
+                    [style]="{ width: '100%' }"
+                    name="{{ col.field }}-{{ rowIndex }}"
+                    #ctrl="ngModel"
+                    [ngClass]="{ 'ng-invalid': ctrl.invalid && ctrl.touched }"
                     *ngSwitchCase="'textArea'"
                     pInputTextarea
                     rows="3"
@@ -239,11 +256,6 @@
                     name="{{ col.field }}-{{ rowIndex }}"
                     #ctrl="ngModel"
                     [ngClass]="{ 'ng-invalid': ctrl.invalid && ctrl.touched }"
-                    [style]="{
-                      'word-wrap': 'break-word',
-                      'max-width': '2rem',
-                      'min-width': '100%'
-                    }"
                     required
                     *ngSwitchCase="'dropdown'"
                     [(ngModel)]="rowData[col.field]"
@@ -260,14 +272,10 @@
 
                   <!-- autoComplete -->
                   <p-autoComplete
+                    [style]="{ width: '100%' }"
                     name="{{ col.field }}-{{ rowIndex }}"
                     #ctrl="ngModel"
                     [ngClass]="{ 'ng-invalid': ctrl.invalid && ctrl.touched }"
-                    [style]="{
-                      'word-wrap': 'break-word',
-                      'max-width': '2rem',
-                      'min-width': '100%'
-                    }"
                     *ngSwitchCase="'autoComplete'"
                     [(ngModel)]="rowData[col.field]"
                     [suggestions]="autoCompleteList"
@@ -289,11 +297,7 @@
                     [ngClass]="{ 'ng-invalid': ctrl.invalid && ctrl.touched }"
                     *ngSwitchDefault
                     [readonly]="col.readOnly"
-                    [style]="{
-                      'word-wrap': 'break-word',
-                      'max-width': '2rem',
-                      'min-width': '100%'
-                    }"
+                    [style]="{ width: '100%' }"
                     pInputText
                     type="text"
                     [(ngModel)]="rowData[col.field]"
@@ -314,15 +318,7 @@
           </td>
 
           <!-- 按鈕區 -->
-          <td
-            pFrozenColumn
-            alignFrozen="right"
-            style="
-              min-width: 125px !important;
-              max-width: 2rem !important;
-              width: 200px !important;
-            "
-          >
+          <td pFrozenColumn alignFrozen="right" style="width: 80px">
             <button
               *ngIf="!editing"
               pButton

@@ -26,12 +26,13 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared.module';
 import { CoreModule } from '../../../core/core.module';
 import { Subject } from 'rxjs/internal/Subject';
+import { MenuItem } from 'primeng/api';
 
 /**
  * 定義基礎的 Form 表單 Component
  */
 @Component({
-  selector: 'app-base-form-compoent',
+  selector: 'app-base-upload-compoent',
   standalone: true,
   imports: [CommonModule, SharedModule, CoreModule],
   providers: [LoadingMaskService, SystemMessageService],
@@ -43,9 +44,25 @@ export abstract class BaseUploadCompoent implements AfterViewInit {
   protected messageService = inject(SystemMessageService);
   protected excelFileReaderService = inject(ExcelFileReaderService);
 
+  /**
+   * 上方頁簽
+   * */
+  protected detailTabs: MenuItem[] = [];
+
+  /**
+   * Sheet Name 下拉選單
+   */
   sheetNameOptions: any[] = [];
 
-  constructor() {}
+  /**
+   * 用於 Submit 狀態
+   * */
+  protected submitted: boolean = false;
+
+  /**
+   * 用於控制 Dialog 是否開啟的 flag
+   */
+  protected dialogOpened: boolean = false;
 
   /**
    * 選取的檔案。
@@ -105,20 +122,42 @@ export abstract class BaseUploadCompoent implements AfterViewInit {
   @ViewChild('spreadsheet') spreadsheetContainer!: ElementRef;
 
   /**
+   * 動態定義表格欄位參數
+   */
+  cols: any[] = [];
+
+  /**
+   * 表格資料
+   */
+  tableData: any[] = [];
+
+  /**
    * 定義 Form Group
    * */
   protected formGroup!: FormGroup;
-
-  /**
-   * 用於 Submit 用
-   */
-  protected submitted: boolean = false;
 
   /**
    * 表單動作
    */
   protected formAction!: string;
 
+  constructor() {}
+
+  /**
+   * OnInit 初始化動作
+   */
+  ngOnInit(): void {
+    this.resetState(); // 初始化
+  }
+
+  /**
+   * OnDestroy 用於 Component 生命週期結束前的動作
+   */
+  ngOnDestroy(): void {}
+
+  /**
+   * AfterViewInit 初始化完成(即視圖被呈現) 後要執行的動作
+   */
   ngAfterViewInit(): void {
     // 使用 setTimeout 函式將 jexcel 初始化，確保 `ViewChild` 存在。
     setTimeout(() => {
@@ -306,5 +345,18 @@ export abstract class BaseUploadCompoent implements AfterViewInit {
       // 驗證結果符合需求，回傳 null
       return null;
     };
+  }
+
+  /**
+   * 初始化狀態
+   */
+  private resetState() {
+    this.dialogOpened = false;
+    this.detailTabs = [];
+    this.sheetNameOptions = [];
+    this.tableData = [];
+    this.cols = [];
+    this.formGroup = new FormGroup({});
+    this.submitted = false;
   }
 }

@@ -1,4 +1,11 @@
-import { Component, inject, Injectable, Output } from '@angular/core';
+import {
+  Component,
+  inject,
+  Injectable,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Option } from '../../models/option.model';
@@ -18,7 +25,7 @@ import { SharedModule } from '../../shared.module';
   providers: [],
   template: '',
 })
-export abstract class BaseHeaderLineTableCompoent {
+export abstract class BaseHeaderLineTableCompoent implements OnInit, OnDestroy {
   protected loadingMaskService = inject(LoadingMaskService);
   protected messageService = inject(SystemMessageService);
   /**
@@ -148,6 +155,18 @@ export abstract class BaseHeaderLineTableCompoent {
   constructor() {}
 
   /**
+   * OnInit 初始化動作
+   */
+  ngOnInit(): void {
+    this.resetState(); // 初始化
+  }
+
+  /**
+   * OnDestroy 用於 Component 生命週期結束前的動作
+   */
+  ngOnDestroy(): void {}
+
+  /**
    * Patch FormGroup 的值
    * @param data
    */
@@ -209,5 +228,24 @@ export abstract class BaseHeaderLineTableCompoent {
    */
   loadDropdownData(col: any): any[] {
     return [];
+  }
+
+  private resetState() {
+    this.dialogOpened = false;
+    this.detailTabs = [];
+    this.headerTableData = [];
+    this.lineTableData = [];
+    this.headerCols = [];
+    this.lineCols = [];
+    this.selectedIndex = -1;
+    this.editingRow = null;
+    this.editingIndex = -1;
+    this.formGroup = new FormGroup({});
+    this.submitted = false;
+    this.deleteList = [];
+    this.detailTabColumns = [];
+    this.newRow = null;
+    this.newRowIndexes = [];
+    this.mode = '';
   }
 }

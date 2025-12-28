@@ -24,7 +24,7 @@ export class LoginComponent
     super();
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.formGroup = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
@@ -37,7 +37,7 @@ export class LoginComponent
    */
   login() {}
 
-  ngOnDestroy(): void {
+  override ngOnDestroy(): void {
     this._destroying$.next(undefined);
     this._destroying$.complete();
   }

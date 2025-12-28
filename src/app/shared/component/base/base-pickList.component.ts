@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SystemMessageService } from '../../../core/services/system-message.service';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -13,23 +13,60 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
   providers: [],
   template: '',
 })
-export abstract class BasePickListCompoent {
-  // 定義 Form Group
+export abstract class BasePickListCompoent implements OnInit, OnDestroy {
+  /**
+   * 定義 Form Group
+   **/
   protected formGroup!: FormGroup;
 
-  protected submitted: boolean = false; // 用於 Submit 用
+  /**
+   * 用於 Submit 用的 Flag
+   */
+  protected submitted: boolean = false;
 
-  protected formAction!: string; // 表單動作
+  /**
+   * 表單動作
+   */
+  protected formAction!: string;
 
-  showPickList!: boolean; // 用於顯示 PickList
+  /**
+   * 用於顯示 PickList
+   */
+  showPickList: boolean = false;
 
-  sourceList: any[] = []; // 可選資料清單
+  /**
+   * 可選資料清單
+   */
+  sourceList: any[] = [];
 
-  targetList: any[] = []; // 選擇後資料清單
+  /**
+   * 選擇後資料清單
+   */
+  targetList: any[] = [];
 
-  detailTabs: any[] = []; // PickList 上方 Tab 按鈕選單
+  /**
+   * PickList 上方 Tab 按鈕選單
+   */
+  detailTabs: any[] = [];
+
+  /**
+   * 用來判斷是否開啟 Dialog
+   */
+  dialogOpened: boolean = false;
 
   constructor() {}
+
+  /**
+   * OnInit 初始化動作
+   */
+  ngOnInit(): void {
+    this.resetState(); // 初始化
+  }
+
+  /**
+   * OnDestroy 用於 Component 生命週期結束前的動作
+   */
+  ngOnDestroy(): void {}
 
   /**
    * Patch FormGroup 的值
@@ -95,5 +132,18 @@ export abstract class BasePickListCompoent {
       (item) => item.id !== event.item?.id
     );
     this.sourceList.push(event.item);
+  }
+
+  /**
+   * 初始化狀態
+   */
+  private resetState() {
+    this.dialogOpened = false;
+    this.formGroup = new FormGroup({});
+    this.submitted = false;
+    this.showPickList = false; // 用於顯示 PickList
+    this.sourceList = []; // 可選資料清單
+    this.targetList = []; // 選擇後資料清單
+    this.detailTabs = []; // PickList 上方 Tab 按鈕選單
   }
 }
