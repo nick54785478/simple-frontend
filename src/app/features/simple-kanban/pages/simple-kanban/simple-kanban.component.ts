@@ -19,12 +19,14 @@ export class SimpleKanbanComponent implements OnInit {
   inProgress: Task[] = [];
   done: Task[] = [];
 
-  persons: Option[] = [];
+  persons: Option[] = []; // 下拉式選單
 
-  dragOverIndex: number | null = null;
+  dragOverIndex: number | null = null; // 判斷滑鼠在目標卡片的上半區 or 下半區
 
   draggedTask: Task | null = null; // 被拖拉的卡片
+
   editingTaskId: string | null = null; // 正在編輯的 Task id
+
   clonedTask: Task | null = null; // 暫存編輯中的資料
 
   constructor(private dialogConfirmService: DialogConfirmService) {}
@@ -198,7 +200,9 @@ export class SimpleKanbanComponent implements OnInit {
    * 儲存修改
    */
   onSave(listName: 'todo' | 'inProgress' | 'done') {
-    if (!this.clonedTask) return;
+    if (!this.clonedTask) {
+      return;
+    }
 
     this[listName] = this[listName].map((t) =>
       t.id === this.editingTaskId ? this.clonedTask! : t
