@@ -48,6 +48,7 @@ import { ChartModule } from 'primeng/chart';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { OrganizationChartModule } from 'primeng/organizationchart';
 import { AccordionModule } from 'primeng/accordion';
+import { TreeTableModule } from 'primeng/treetable';
 
 /**
  * 用來匯入 PrimeNG 用到的元件
@@ -104,6 +105,7 @@ import { AccordionModule } from 'primeng/accordion';
     ToolbarModule,
     TooltipModule,
     TreeModule,
+    TreeTableModule,
   ],
   exports: [
     AccordionModule,
@@ -154,6 +156,7 @@ import { AccordionModule } from 'primeng/accordion';
     ToolbarModule,
     TooltipModule,
     TreeModule,
+    TreeTableModule,
   ],
 })
 export class PrimengModule {}

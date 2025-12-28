@@ -1,0 +1,86 @@
+<p-card
+  header="魚骨圖分析 (Fishbone Diagram Analysis)"
+  subheader="客戶測試階段發現異常電流問題"
+>
+  <div class="card" #contentElement>
+    <p-tabMenu
+      #detailTabMenuComponent
+      [model]="detailTabs"
+      styleClass="table-tabmenu"
+    >
+    </p-tabMenu>
+  </div>
+  <div class="card">
+    <p-treeTable
+      [value]="files"
+      [columns]="cols"
+      [scrollable]="true"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      #tt
+    >
+      <!-- 表頭 -->
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">{{ col.header }}</th>
+          <!-- 新增操作欄 -->
+        </tr>
+      </ng-template>
+
+      <!-- 表身 -->
+      <ng-template
+        pTemplate="body"
+        let-rowNode
+        let-rowData="rowData"
+        let-columns="columns"
+      >
+        <tr [ttRow]="rowNode">
+          <td
+            *ngFor="let col of columns; let i = index"
+            ttEditableColumn
+            [ttEditableColumnDisabled]="rowNode.level === 0"
+            [ngClass]="{ 'p-toggler-column': i === 0 }"
+          >
+            <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0" />
+            <!-- 編輯區 -->
+            <p-treeTableCellEditor>
+              <ng-template pTemplate="input">
+                <input
+                  pInputText
+                  type="text"
+                  [(ngModel)]="rowData[col.field]"
+                  [ngClass]="{ 'invalid-cell': !rowData[col.field]?.trim() }"
+                />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ rowData[col.field] }}
+              </ng-template>
+            </p-treeTableCellEditor>
+          </td>
+
+          <!-- 操作欄 -->
+          <td>
+            <!-- 新增子節點（僅 level 0） -->
+            <button
+              *ngIf="rowNode.level === 0"
+              pButton
+              [text]="true"
+              icon="pi pi-plus"
+              class="p-button-rounded p-button-success p-button-sm mr-2"
+              (click)="addNode(rowNode.node)"
+            ></button>
+
+            <!-- 刪除子節點（僅 level 1） -->
+            <button
+              *ngIf="rowNode.level === 1"
+              pButton
+              [text]="true"
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-danger p-button-sm"
+              (click)="deleteNode(rowNode.node)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-treeTable>
+  </div>
+</p-card>

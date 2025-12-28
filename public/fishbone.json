@@ -1,0 +1,156 @@
+{
+  "code": "200",
+  "message": "Success",
+  "data": [
+    {
+      "data": {
+        "name": "人 (Man)"
+      },
+      "children": [
+        {
+          "data": {
+            "name": "操作員未按標準程序操作"
+          },
+          "children": []
+        },
+        {
+          "data": {
+            "name": "操作員培訓不足"
+          },
+          "children": []
+        },
+        {
+          "data": {
+            "name": "誤讀測試設備指示燈"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "data": {
+        "name": "機 (Machine)"
+      },
+      "children": [
+        {
+          "data": {
+            "name": "測試設備校正不準"
+          },
+          "children": []
+        },
+        {
+          "data": {
+            "name": "老化的電源供應器"
+          },
+          "children": []
+        },
+        {
+          "data": {
+            "name": "PCB 測試夾具接觸不良"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "data": {
+        "name": "料 (Material)"
+      },
+      "children": [
+        {
+          "data": {
+            "name": "電阻規格異常"
+          },
+          "children": []
+        },
+        {
+          "data": {
+            "name": "供應商提供電源模組品質不穩定"
+          },
+          "children": []
+        },
+        {
+          "data": {
+            "name": "焊錫材料受潮"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "data": {
+        "name": "法 (Method)"
+      },
+      "children": [
+        {
+          "data": {
+            "name": "測試 SOP 未更新"
+          },
+          "children": []
+        },
+        {
+          "data": {
+            "name": "測試步驟順序錯誤"
+          },
+          "children": []
+        },
+        {
+          "data": {
+            "name": "未使用測試治具固定元件"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "data": {
+        "name": "環 (Environment)"
+      },
+      "children": [
+        {
+          "data": {
+            "name": "測試室溫濕度超出規範"
+          },
+          "children": []
+        },
+        {
+          "data": {
+            "name": "電磁干擾影響測試結果"
+          },
+          "children": []
+        },
+        {
+          "data": {
+            "name": "供電波動"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "data": {
+        "name": "測 (Measurement)"
+      },
+      "children": [
+        {
+          "data": {
+            "name": "測試儀器量程設定不當"
+          },
+          "children": []
+        },
+        {
+          "data": {
+            "name": "量測線接觸不良"
+          },
+          "children": []
+        },
+        {
+          "data": {
+            "name": "測試數據紀錄錯誤"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

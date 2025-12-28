@@ -1,0 +1,19 @@
+{
+    "code":"200",
+    "message":"Success",
+    "data":[
+        {
+            "label":"焊錫材料受潮",
+            "value":"219da913-b5d8-49d3-9720-4ab0b567126b"
+        },
+        {
+            "label":"老化的電源供應器",
+            "value":"4c7f337e-d432-420e-8efa-6ee261c5d9fe"
+        },
+        {
+            "label":"操作員未按標準程序操作",
+            "value":""
+        }
+
+    ]
+}

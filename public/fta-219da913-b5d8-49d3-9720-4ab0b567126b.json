@@ -1,0 +1,55 @@
+{
+  "code": "200",
+  "message": "Success",
+  "data": [
+    {
+      "label": "焊錫材料受潮",
+      "expanded": null,
+      "children": [
+        {
+          "label": "產品焊點脆裂",
+          "expanded": null,
+          "children": [
+            {
+              "label": "AND",
+              "expanded": null,
+              "children": [
+                {
+                  "label": "儲存環境濕度過高",
+                  "expanded": null,
+                  "children": null
+                },
+                {
+                  "label": "包裝防潮措施不足",
+                  "expanded": null,
+                  "children": null
+                },
+                {
+                  "label": "倉庫溫濕度監控失效",
+                  "expanded": null,
+                  "children": null
+                }
+              ]
+            },
+            {
+              "label": "OR",
+              "expanded": null,
+              "children": [
+                {
+                  "label": "預熱不足，水氣殘留",
+                  "expanded": null,
+                  "children": null
+                },
+                {
+                  "label": "焊接溫度曲線控制不佳",
+                  "expanded": null,
+                  "children": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

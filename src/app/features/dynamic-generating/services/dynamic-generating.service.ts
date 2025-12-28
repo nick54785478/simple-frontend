@@ -12,6 +12,10 @@ export class DynamicGeneratingService {
 
   constructor(private http: HttpClient) {}
 
+  /**
+   * 取得 UI 資料
+   * @returns
+   */
   public getUIData(): Observable<FormField[]> {
     return this.http.get<FormField[]>('/dynamic-generating-jsonstring.json');
   }

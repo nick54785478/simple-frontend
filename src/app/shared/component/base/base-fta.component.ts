@@ -21,21 +21,9 @@ export abstract class BaseFtaCompoent implements OnInit, OnDestroy {
   protected messageService = inject(SystemMessageService);
 
   /**
-   * Fta 樹狀資料
+   * Fta 樹狀資料  (預設資料)
    */
-  protected ftaData: TreeNode[] = [
-    {
-      label: '頂事件 (Top Event)',
-      expanded: true,
-      children: [
-        {
-          label: 'AND Gate',
-          expanded: true,
-          children: [{ label: '基礎事件 A' }, { label: '基礎事件 B' }],
-        },
-      ],
-    },
-  ];
+  protected ftaData: TreeNode[] = [];
 
   /**
    * 選擇的節點
@@ -95,6 +83,7 @@ export abstract class BaseFtaCompoent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.resetState(); // 初始化
+    this.getDefaultData();
   }
 
   /**
@@ -194,6 +183,25 @@ export abstract class BaseFtaCompoent implements OnInit, OnDestroy {
   }
 
   /**
+   * 取得預設 fta 資料
+   */
+  protected getDefaultData() {
+    this.ftaData = [
+      {
+        label: '頂事件 (Top Event)',
+        expanded: true,
+        children: [
+          {
+            label: 'AND Gate',
+            expanded: true,
+            children: [{ label: '基礎事件 A' }, { label: '基礎事件 B' }],
+          },
+        ],
+      },
+    ];
+  }
+
+  /**
    * 遞迴處理子節點
    * @param nodes
    * @param target
@@ -215,16 +223,6 @@ export abstract class BaseFtaCompoent implements OnInit, OnDestroy {
     }
     return false; // 沒有找到節點，回傳 false
   }
-
-  /**
-   * 提交資料
-   */
-  submit() {}
-
-  /**
-   * 取消
-   */
-  cancel() {}
 
   /**
    * 初始化狀態

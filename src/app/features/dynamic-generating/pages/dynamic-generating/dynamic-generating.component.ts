@@ -79,11 +79,15 @@ export class DynamicGeneratingComponent
    */
   getValidators(validators: string[]) {
     const formValidators = [];
-    if (validators.includes('required'))
+    if (validators.includes('required')) {
       formValidators.push(Validators.required);
-    if (validators.includes('email')) formValidators.push(Validators.email);
-    if (validators.includes('requiredTrue'))
+    }
+    if (validators.includes('email')) {
+      formValidators.push(Validators.email);
+    }
+    if (validators.includes('requiredTrue')) {
       formValidators.push(Validators.requiredTrue);
+    }
     return formValidators;
   }
 

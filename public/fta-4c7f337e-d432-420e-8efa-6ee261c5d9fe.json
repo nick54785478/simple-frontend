@@ -1,0 +1,102 @@
+{
+  "code": "200",
+  "message": "Success",
+  "data": [
+    {
+      "label": "老化的電源供應器",
+      "expanded": null,
+      "children": [
+        {
+          "label": "OR",
+          "expanded": null,
+          "children": [
+            {
+              "label": "元件老化",
+              "expanded": null,
+              "children": [
+                {
+                  "label": "電容容量下降",
+                  "expanded": null,
+                  "children": null
+                },
+                {
+                  "label": "晶體管性能衰退",
+                  "expanded": null,
+                  "children": null
+                },
+                {
+                  "label": "焊點疲勞",
+                  "expanded": null,
+                  "children": null
+                }
+              ]
+            },
+            {
+              "label": "環境因素",
+              "expanded": null,
+              "children": [
+                {
+                  "label": "高溫長時間運作",
+                  "expanded": null,
+                  "children": null
+                },
+                {
+                  "label": "高濕導致腐蝕",
+                  "expanded": null,
+                  "children": null
+                },
+                {
+                  "label": "灰塵累積",
+                  "expanded": null,
+                  "children": null
+                }
+              ]
+            },
+            {
+              "label": "設計缺陷",
+              "expanded": null,
+              "children": [
+                {
+                  "label": "散熱不足",
+                  "expanded": null,
+                  "children": null
+                },
+                {
+                  "label": "保護電路不完善",
+                  "expanded": null,
+                  "children": null
+                },
+                {
+                  "label": "選用低品質零件",
+                  "expanded": null,
+                  "children": null
+                }
+              ]
+            },
+            {
+              "label": "使用不當",
+              "expanded": null,
+              "children": [
+                {
+                  "label": "長時間過載運行",
+                  "expanded": null,
+                  "children": null
+                },
+                {
+                  "label": "不穩定電源輸入",
+                  "expanded": null,
+                  "children": null
+                },
+                {
+                  "label": "維護不足",
+                  "expanded": null,
+                  "children": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -13,6 +13,7 @@ import { SimpleKanbanComponent } from './simple-kanban/pages/simple-kanban/simpl
 import { SimpleChartComponent } from './simple-chart/simple-chart.component';
 import { SimpleFtaComponent } from './simple-fta/pages/simple-fta/simple-fta.component';
 import { SimpleQaComponent } from './simple-qa/pages/simple-qa/simple-qa.component';
+import { SimpleFishboneComponent } from './simple-fishbone/pages/simple-fishbone/simple-fishbone.component';
 
 /**
  * 定義 Features 子路由配置的檔案
@@ -60,6 +61,10 @@ export const routes: Routes = [
   {
     path: 'simple-fta',
     component: SimpleFtaComponent,
+  },
+  {
+    path: 'simple-fishbone',
+    component: SimpleFishboneComponent,
   },
   {
     path: 'simple-qa',

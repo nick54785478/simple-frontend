@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SystemMessageService } from '../../../core/services/system-message.service';
 import { LoadingMaskService } from '../../../core/services/loading-mask.service';
+import { MenuItem } from 'primeng/api';
 
 /**
  * 定義基礎的 Form 表單 Component
@@ -17,6 +18,11 @@ import { LoadingMaskService } from '../../../core/services/loading-mask.service'
 export abstract class BaseFormCompoent implements OnInit, OnDestroy {
   protected loadingMaskService = inject(LoadingMaskService);
   protected messageService = inject(SystemMessageService);
+
+  /**
+   * 表格上方 Tabs
+   */
+  detailTabs: MenuItem[] = [];
 
   /**
    * 定義 Form Group

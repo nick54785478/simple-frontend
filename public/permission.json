@@ -70,13 +70,20 @@
     "visible": true
   },
   {
+    "label": "魚骨圖 範例",
+    "icon": "",
+    "url": "/simple-fishbone",
+    "routerLink": "/simple-fishbone",
+    "visible": true
+  },
+  {
     "label": "FTA 範例",
     "icon": "",
     "url": "/simple-fta",
     "routerLink": "/simple-fta",
     "visible": true
   },
-   {
+  {
     "label": "簡單問卷",
     "icon": "",
     "url": "/simple-qa",
